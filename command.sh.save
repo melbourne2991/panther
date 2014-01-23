@@ -1,0 +1,8 @@
+x-terminal-emulatorx-terminal-emulator
+coffee -o js/ -cw coffeescript/
+elif [ "$1" == "k" ]; then
+karma start karma.config.js
+elif [ "$1" == "r" ]; then
+source ~/.bash_profile
+rails s
+fi

@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="en" data-ng-app="sprangularApp">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation</title>
+    <link rel="stylesheet" href="stylesheets/app.css" />
+
+    <!--Library/Framework JS-->
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="manual_components/angular-ui-router.js"></script>
+
+    <!--App JS-->
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
+  </head>
+  <body>
+
+  <div class="main_container">
+    <div class="row">
+      <div class="small-12 columns main">
+        <div ui-view class="view-frame"></div>
+      </div>
+    </div>
+  </div>
+
+  </body>
+</html>
