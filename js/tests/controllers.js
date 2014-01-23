@@ -38,10 +38,6 @@ describe('productsController', function() {
     	$httpBackend.resetExpectations();
    	});
 
-	it('Should return an array of taxonomies', function () {
-		expect(scope.taxonomies[0].name).toBe('Brand');
-	});
-
 	it('Should instantiate a new product object from json data', function() {
 		expect(scope.currentProduct.name).toBe('Spree Ringer T-Shirt');
 	});

@@ -7,9 +7,6 @@
   sprangularControllers.controller('productsController', [
     '$scope', '$state', '$stateParams', 'Product', 'Taxonomy', 'Defaults', function($scope, $state, $stateParams, Product, Taxonomy, Defaults) {
       $scope.root = Defaults.root;
-      Taxonomy.taxonomies_with_meta().$promise.then(function(response) {
-        return $scope.taxonomies = response.taxonomies;
-      });
       return Product.find($stateParams.id).$promise.then(function(response) {
         return $scope.currentProduct = response;
       });
@@ -38,6 +35,16 @@
           return $scope.taxons = taxonomy.taxons;
         }
       });
+    }
+  ]);
+
+  sprangularControllers.controller('storeView', [
+    '$scope', '$state', '$stateParams', 'Taxonomy', 'Defaults', function($scope, $state, $stateParams, Taxonomy, Defaults) {
+      $scope.path = Defaults.root + $state.current.url + '/taxonomies/';
+      Taxonomy.taxonomies_with_meta().$promise.then(function(response) {
+        return $scope.taxonomies = response.taxonomies;
+      });
+      return console.log($state);
     }
   ]);
 

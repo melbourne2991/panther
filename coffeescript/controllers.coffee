@@ -3,10 +3,6 @@ sprangularControllers = angular.module('sprangularControllers', ['sprangularServ
 sprangularControllers.controller('productsController', ['$scope', '$state','$stateParams', 'Product', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Product, Taxonomy, Defaults) ->
 	$scope.root = Defaults.root
 	
-	Taxonomy.taxonomies_with_meta().$promise.then( (response) ->
-		$scope.taxonomies = response.taxonomies
-	)
-
 	Product.find($stateParams.id).$promise.then( (response) ->
 		$scope.currentProduct = response 
 	)
@@ -34,4 +30,14 @@ sprangularControllers.controller('taxonomiesController', ['$scope', '$state','$s
 	);
 ])
 
+sprangularControllers.controller('storeView', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
+	
+	$scope.path = Defaults.root + $state.current.url + '/taxonomies/'
+
+	Taxonomy.taxonomies_with_meta().$promise.then( (response) ->
+		$scope.taxonomies = response.taxonomies
+	)
+
+	console.log($state)
+])
 
