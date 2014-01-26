@@ -1,0 +1,809 @@
+3.2.14 (Media Mark)
+d8234f9d05971db981a25987edb258ab67501b4e
+o:Sass::Tree::RootNode
+:@template"Ä%@import "global";
+@import "type";
+@import "top-bar";
+
+// OFF CANVAS VARIABLES
+// Off Canvas Tab Bar Variables
+$tabbar-bg: #333 !default;
+$tabbar-height: rem-calc(45) !default;
+$tabbar-line-height: $tabbar-height !default;
+$tabbar-color: #FFF !default;
+$tabbar-middle-padding: 0 rem-calc(10) !default;
+
+// Off Canvas Divider Styles
+$tabbar-right-section-border: solid 1px lighten($tabbar-bg, 10%) !default;
+$tabbar-left-section-border: solid 1px darken($tabbar-bg, 10%) !default;
+
+// Off Canvas Tab Bar Headers
+$tabbar-header-color: #FFF !default;
+$tabbar-header-weight: bold !default;
+$tabbar-header-line-height: $tabbar-height !default;
+$tabbar-header-margin: 0 !default;
+
+// Off Canvas Menu Variables
+$off-canvas-width: 250px !default;
+$off-canvas-bg: #333 !default;
+
+// Off Canvas Menu List Variables
+$off-canvas-label-padding: 0.3rem rem-calc(15) !default;
+$off-canvas-label-color: #999 !default;
+$off-canvas-label-text-transform: uppercase !default;
+$off-canvas-label-font-weight: bold !default;
+$off-canvas-label-bg: #444 !default;
+$off-canvas-label-border-top: 1px solid lighten(#444, 10%) !default;
+$off-canvas-label-border-bottom: none !default;
+$off-canvas-label-margin:0 !default;
+$off-canvas-link-padding: rem-calc(10, 15) !default;
+$off-canvas-link-color: rgba(#FFF, 0.7) !default;
+$off-canvas-link-border-bottom: 1px solid darken($off-canvas-bg, 5%) !default;
+
+// Off Canvas Menu Icon Variables
+$tabbar-menu-icon-color: #FFF !default;
+$tabbar-menu-icon-hover: darken($tabbar-menu-icon-color, 30%) !default;
+
+$tabbar-menu-icon-text-indent: rem-calc(35) !default;
+$tabbar-menu-icon-width: $tabbar-height !default;
+$tabbar-menu-icon-height: $tabbar-height !default;
+$tabbar-menu-icon-line-height: rem-calc(33) !default;
+$tabbar-menu-icon-padding: 0 !default;
+
+$tabbar-hamburger-icon-width: rem-calc(16) !default;
+$tabbar-hamburger-icon-left: rem-calc(13) !default;
+$tabbar-hamburger-icon-top: rem-calc(5) !default;
+
+// Off Canvas Back-Link Overlay
+$off-canvas-overlay-transition: background 300ms ease !default;
+$off-canvas-overlay-cursor: pointer !default;
+$off-canvas-overlay-box-shadow: -4px 0 4px rgba(#000, 0.5), 4px 0 4px rgba(#000, 0.5) !default;
+$off-canvas-overlay-background: rgba(#FFF, 0.2) !default;
+$off-canvas-overlay-background-hover: rgba(#FFF, 0.05) !default;
+
+// Transition Variabls
+$menu-slide: "transform 500ms ease" !default;
+
+
+// EXTEND CLASSES
+// Remove transition flicker on phones
+%kill-flicker {
+  // -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
+
+// Basic properties for the content wraps
+%wrap-base {
+  position: relative;
+  width: 100%;
+}
+
+// basic styles for off-canvas menu container
+%off-canvas-menu {
+  width: $off-canvas-width;
+  top:0;
+  bottom:0;
+  height: 100%;
+  position: absolute;
+  overflow-y: auto;
+  background: $off-canvas-bg;
+  z-index: 1001;
+  box-sizing: content-box;
+}
+
+// TRANSLATE 3D
+@mixin translate3d($tx,$ty,$tz) {
+  -webkit-transform: translate3d($tx,$ty,$tz);
+  -moz-transform: translate3d($tx,$ty,$tz);
+  -ms-transform: translate3d($tx,$ty,$tz);
+  -o-transform: translate3d($tx,$ty,$tz);
+  transform: translate3d($tx,$ty,$tz)
+}
+
+// OFF CANVAS WRAP
+// Wrap visible content and prevent scroll bars
+@mixin off-canvas-wrap {
+    @extend %kill-flicker;
+    @extend %wrap-base;
+    overflow: hidden;
+}
+
+// INNER WRAP
+// Main content area that moves to reveal the off-canvas nav
+@mixin inner-wrap {
+    @extend %kill-flicker;
+    @extend %wrap-base;
+    @include clearfix;
+
+    -webkit-transition: -webkit-#{$menu-slide};
+    -moz-transition: -moz-#{$menu-slide};
+    -ms-transition: -ms-#{$menu-slide};
+    -o-transition: -o-#{$menu-slide};
+    transition: #{$menu-slide};
+
+}
+
+// TAB BAR
+// This is the tab bar base
+@mixin tab-bar-base { 
+  @extend %kill-flicker;
+
+  // base styles
+  background: $tabbar-bg;
+  color: $tabbar-color;
+  height: $tabbar-height;
+  line-height: $tabbar-height;
+
+  // make sure it's below the .exit-offcanvas link
+  position: relative;
+  // z-index: 999;
+
+  // Typography
+  h1,h2,h3,h4,h5,h6 {
+    color: $tabbar-header-color;
+    font-weight: $tabbar-header-weight;
+    line-height: $tabbar-header-line-height;
+    margin: $tabbar-header-margin;
+  }
+  h1,h2,h3,h4 { font-size: $h5-font-size; }
+}
+
+// SMALL SECTIONS
+// These are small sections on the left and right that contain the off-canvas toggle buttons;
+%tabbar-small-section {
+  width: $tabbar-height;
+  height: $tabbar-height;
+  position: absolute;
+  top:0;
+}
+
+@mixin left-small-section {
+  @extend %tabbar-small-section;
+  border-right: $tabbar-left-section-border;
+  box-shadow: 1px 0 0 lighten($tabbar-bg, 10%);
+  left:0;
+}
+
+@mixin right-small-section {
+  @extend %tabbar-small-section;
+  border-left: $tabbar-right-section-border;
+  box-shadow: -1px 0 0 darken($tabbar-bg, 10%);
+  right:0;
+}
+
+@mixin tab-bar-section {
+  padding: $tabbar-middle-padding;
+  position: absolute;
+  text-align: center;
+  height: $tabbar-height;
+  top:0;
+  @media #{$medium-up} {
+    text-align: left;
+  }
+
+  // still need to make these non-presntational
+  &.left {     
+    left: 0;
+    right: $tabbar-height;
+  }
+  &.right {
+    left: $tabbar-height;
+    right: 0;
+  }
+  &.middle {
+    left: $tabbar-height;
+    right: $tabbar-height;
+  }
+}
+
+// OFF CANVAS LIST
+// This is the list of links in the off-canvas menu
+@mixin off-canvas-list {
+  list-style-type: none;
+  padding:0;
+  margin:0;
+
+  li {
+    label {
+      padding: $off-canvas-label-padding;
+      color: $off-canvas-label-color;
+      text-transform: $off-canvas-label-text-transform;
+      font-weight: $off-canvas-label-font-weight;
+      background: $off-canvas-label-bg;
+      border-top: $off-canvas-label-border-top;
+      border-bottom: $off-canvas-label-border-bottom;
+      margin: $off-canvas-label-margin;
+    }
+    a {
+      display: block;
+      padding: $off-canvas-link-padding;
+      color: $off-canvas-link-color;
+      border-bottom: $off-canvas-link-border-bottom;
+    }
+  }
+
+}
+
+// BACK LINK
+// This is an overlay that, when clicked, will toggle off the off canvas menu
+@mixin back-link {
+    @extend %kill-flicker;
+
+    transition: $off-canvas-overlay-transition;
+    cursor: $off-canvas-overlay-cursor;
+    box-shadow: $off-canvas-overlay-box-shadow;
+
+    // fill the screen
+    display: block;
+    position: absolute;
+    background: $off-canvas-overlay-background;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right:0;
+    z-index: 1002;
+
+    @media #{$medium-up} {
+      &:hover {
+        background: $off-canvas-overlay-background-hover;
+      }
+    }
+}
+
+// OFF CANVAS MENUS
+// These are the containers that contain the off canvas content
+@mixin left-off-canvas-menu {
+  @extend %kill-flicker;
+  @extend %off-canvas-menu;
+  @include translate3d(-100%,0,0);
+  * { @extend %kill-flicker; } 
+}
+@mixin right-off-canvas-menu {
+  @extend %kill-flicker;
+  @extend %off-canvas-menu;
+  @include translate3d(100%,0,0);
+  right:0;
+}
+
+
+//
+// DEFAULT CLASSES
+//
+
+.off-canvas-wrap { @include off-canvas-wrap; }
+.inner-wrap { @include inner-wrap; }
+
+nav.tab-bar { @include tab-bar-base; }
+
+section.left-small { @include left-small-section; }
+section.right-small { @include right-small-section; }
+
+section.tab-bar-section { @include tab-bar-section; }
+
+// MENU BUTTON
+// This is a little bonus. You don't need it for off canvas to work. Mixins to be written in the future.
+a.menu-icon {
+  text-indent: $tabbar-menu-icon-text-indent;
+  width: $tabbar-height;
+  height: $tabbar-height;
+  display: block;
+  line-height: $tabbar-menu-icon-line-height;
+  padding: $tabbar-menu-icon-padding;
+  color: $topbar-menu-link-color;
+  position: relative;
+
+  // this is the actual hamburger icon
+  span {
+
+    position: absolute;
+    display: block;
+    width: $tabbar-hamburger-icon-width;
+    height: 0;
+    left: $tabbar-hamburger-icon-left;
+    top: $tabbar-hamburger-icon-top;
+    // margin-top: $tabbar-height / 4;
+
+    @if $experimental {
+      -webkit-box-shadow: 0 10px 0 1px $tabbar-menu-icon-color,
+                          0 16px 0 1px $tabbar-menu-icon-color,
+                          0 22px 0 1px $tabbar-menu-icon-color;
+    }
+      box-shadow:        0 10px 0 1px $tabbar-menu-icon-color,
+                          0 16px 0 1px $tabbar-menu-icon-color,
+                          0 22px 0 1px $tabbar-menu-icon-color;
+  }
+  
+  &:hover span {
+    @if $experimental {
+      -webkit-box-shadow: 0 10px 0 1px $tabbar-menu-icon-hover,
+                          0 16px 0 1px $tabbar-menu-icon-hover,
+                          0 22px 0 1px $tabbar-menu-icon-hover;
+    }
+      box-shadow:        0 10px 0 1px $tabbar-menu-icon-hover,
+                          0 16px 0 1px $tabbar-menu-icon-hover,
+                          0 22px 0 1px $tabbar-menu-icon-hover;
+  }
+}
+
+.left-off-canvas-menu { @include left-off-canvas-menu; }
+.right-off-canvas-menu { @include right-off-canvas-menu; }
+
+ul.off-canvas-list { @include off-canvas-list; }
+
+
+// ANIMATION CLASSES
+// These classes are added with JS and trigger the actual animation. 
+.move-right {
+  > .inner-wrap {
+    @include translate3d($off-canvas-width,0,0);
+  }
+  a.exit-off-canvas { @include back-link;}
+}
+
+.move-left {
+  > .inner-wrap {
+    @include translate3d(-($off-canvas-width),0,0);
+
+  }
+  a.exit-off-canvas { @include back-link; }
+}
+
+// IE9 HAX
+// Womp womp! IE9 doesn't do CSS transforms. Let's fix this.
+.lt-ie10 {
+  
+  // move off canvas menus off the viewport
+  .left-off-canvas-menu { left: -($off-canvas-width); } 
+  .right-off-canvas-menu { right: -($off-canvas-width); }
+
+  // Snap them in place
+  .move-left > .inner-wrap { right: $off-canvas-width; }
+  .move-right > .inner-wrap { left: $off-canvas-width; }
+
+}:@options{ :@has_childrenT:
+@linei:@children[co:Sass::Tree::ImportNode;0;@:@imported_file0;	i;
+[ :@imported_filename"globalo;;0;@;0;	i;
+[ ;"	typeo;;0;@;0;	i;
+[ ;"top-baro:Sass::Tree::CommentNode
+:@value["?/* OFF CANVAS VARIABLES
+ * Off Canvas Tab Bar Variables */;@:
+@type:silent;	i
+;
+[ o:Sass::Tree::VariableNode:
+@expro:Sass::Script::Color	;0;@:@attrs{	:redi8:
+alphai:
+greeni8:	bluei8;	i:
+@name"tabbar-bg;@;	i;
+[ :@guarded"!defaulto;;o:Sass::Script::Funcall;"rem-calc:@splat0;@:
+@args[o:Sass::Script::Number:@denominator_units[ :@numerator_units[ ;i2;@:@original"45;	i;	i:@keywords{ ;"tabbar-height;@;	i;
+[ ;"!defaulto;;o:Sass::Script::Variable	:@underscored_name"tabbar_height;"tabbar-height;@;	i;"tabbar-line-height;@;	i;
+[ ;"!defaulto;;o;	;0;@;{	;iˇ;i;iˇ;iˇ;	i;"tabbar-color;@;	i;
+[ ;"!defaulto;;o:Sass::Script::List	;[o;; @!;![ ;i ;@;""0;	io;;"rem-calc;0;@;[o;; @!;![ ;i;@;""10;	i;	i;#{ ;@;	i:@separator:
+space;"tabbar-middle-padding;@;	i;
+[ ;"!defaulto;
+;["$/* Off Canvas Divider Styles */;@;;;	i;
+[ o;;o;&	;[o:Sass::Script::String	;"
+solid;@;:identifier;	io;; [ ;!["px;i;@;""1px;	io;;"lighten;0;@;[o;$	;%"tabbar_bg;"tabbar-bg;@;	io;; [ ;!["%;i;@;""10%;	i;	i;#{ ;@;	i;';(;" tabbar-right-section-border;@;	i;
+[ ;"!defaulto;;o;&	;[o;)	;"
+solid;@;;*;	io;; [ ;!["px;i;@;""1px;	io;;"darken;0;@;[o;$	;%"tabbar_bg;"tabbar-bg;@;	io;; [ ;!["%;i;@;""10%;	i;	i;#{ ;@;	i;';(;"tabbar-left-section-border;@;	i;
+[ ;"!defaulto;
+;["%/* Off Canvas Tab Bar Headers */;@;;;	i;
+[ o;;o;	;0;@;{	;iˇ;i;iˇ;iˇ;	i;"tabbar-header-color;@;	i;
+[ ;"!defaulto;;o;)	;"	bold;@;;*;	i;"tabbar-header-weight;@;	i;
+[ ;"!defaulto;;o;$	;%"tabbar_height;"tabbar-height;@;	i;"tabbar-header-line-height;@;	i;
+[ ;"!defaulto;;o;; @!;![ ;i ;@;""0;	i;"tabbar-header-margin;@;	i;
+[ ;"!defaulto;
+;["$/* Off Canvas Menu Variables */;@;;;	i;
+[ o;;o;; [ ;!["px;i˙;@;""
+250px;	i;"off-canvas-width;@;	i;
+[ ;"!defaulto;;o;	;0;@;{	;i8;i;i8;i8;	i;"off-canvas-bg;@;	i;
+[ ;"!defaulto;
+;[")/* Off Canvas Menu List Variables */;@;;;	i ;
+[ o;;o;&	;[o;; [ ;!["rem;f0.29999999999999999 33;@;""0.3rem;	i!o;;"rem-calc;0;@;[o;; @!;![ ;i;@;""15;	i!;	i!;#{ ;@;	i!;';(;"off-canvas-label-padding;@;	i!;
+[ ;"!defaulto;;o;	;0;@;{	;iô;i;iô;iô;	i";"off-canvas-label-color;@;	i";
+[ ;"!defaulto;;o;)	;"uppercase;@;;*;	i#;"$off-canvas-label-text-transform;@;	i#;
+[ ;"!defaulto;;o;)	;"	bold;@;;*;	i$;"!off-canvas-label-font-weight;@;	i$;
+[ ;"!defaulto;;o;	;0;@;{	;iI;i;iI;iI;	i%;"off-canvas-label-bg;@;	i%;
+[ ;"!defaulto;;o;&	;[o;; [ ;!["px;i;@;""1px;	i&o;)	;"
+solid;@;;*;	i&o;;"lighten;0;@;[o;	;0;@;{	;iI;i;iI;iI;	i&o;; [ ;!["%;i;@;""10%;	i&;	i&;#{ ;@;	i&;';(;" off-canvas-label-border-top;@;	i&;
+[ ;"!defaulto;;o;)	;"	none;@;;*;	i';"#off-canvas-label-border-bottom;@;	i';
+[ ;"!defaulto;;o;; @!;![ ;i ;@;""0;	i(;"off-canvas-label-margin;@;	i(;
+[ ;"!defaulto;;o;;"rem-calc;0;@;[o;; @!;![ ;i;@;""10;	i)o;; @!;![ ;i;@;""15;	i);	i);#{ ;"off-canvas-link-padding;@;	i);
+[ ;"!defaulto;;o;;"	rgba;0;@;[o;	;0;@;{	;iˇ;i;iˇ;iˇ;	i*o;; @!;![ ;f0.69999999999999996 ff;@;""0.7;	i*;	i*;#{ ;"off-canvas-link-color;@;	i*;
+[ ;"!defaulto;;o;&	;[o;; [ ;!["px;i;@;""1px;	i+o;)	;"
+solid;@;;*;	i+o;;"darken;0;@;[o;$	;%"off_canvas_bg;"off-canvas-bg;@;	i+o;; [ ;!["%;i
+;@;""5%;	i+;	i+;#{ ;@;	i+;';(;""off-canvas-link-border-bottom;@;	i+;
+[ ;"!defaulto;
+;[")/* Off Canvas Menu Icon Variables */;@;;;	i-;
+[ o;;o;	;0;@;{	;iˇ;i;iˇ;iˇ;	i.;"tabbar-menu-icon-color;@;	i.;
+[ ;"!defaulto;;o;;"darken;0;@;[o;$	;%"tabbar_menu_icon_color;"tabbar-menu-icon-color;@;	i/o;; [ ;!["%;i#;@;""30%;	i/;	i/;#{ ;"tabbar-menu-icon-hover;@;	i/;
+[ ;"!defaulto;;o;;"rem-calc;0;@;[o;; @!;![ ;i(;@;""35;	i1;	i1;#{ ;"!tabbar-menu-icon-text-indent;@;	i1;
+[ ;"!defaulto;;o;$	;%"tabbar_height;"tabbar-height;@;	i2;"tabbar-menu-icon-width;@;	i2;
+[ ;"!defaulto;;o;$	;%"tabbar_height;"tabbar-height;@;	i3;"tabbar-menu-icon-height;@;	i3;
+[ ;"!defaulto;;o;;"rem-calc;0;@;[o;; @!;![ ;i&;@;""33;	i4;	i4;#{ ;"!tabbar-menu-icon-line-height;@;	i4;
+[ ;"!defaulto;;o;; @!;![ ;i ;@;""0;	i5;"tabbar-menu-icon-padding;@;	i5;
+[ ;"!defaulto;;o;;"rem-calc;0;@;[o;; @!;![ ;i;@;""16;	i7;	i7;#{ ;" tabbar-hamburger-icon-width;@;	i7;
+[ ;"!defaulto;;o;;"rem-calc;0;@;[o;; @!;![ ;i;@;""13;	i8;	i8;#{ ;"tabbar-hamburger-icon-left;@;	i8;
+[ ;"!defaulto;;o;;"rem-calc;0;@;[o;; @!;![ ;i
+;@;""5;	i9;	i9;#{ ;"tabbar-hamburger-icon-top;@;	i9;
+[ ;"!defaulto;
+;["'/* Off Canvas Back-Link Overlay */;@;;;	i;;
+[ o;;o;&	;[o;)	;"background;@;;*;	i<o;; [ ;!["ms;i,;@;""
+300ms;	i<o;)	;"	ease;@;;*;	i<;@;	i<;';(;""off-canvas-overlay-transition;@;	i<;
+[ ;"!defaulto;;o;)	;"pointer;@;;*;	i=;"off-canvas-overlay-cursor;@;	i=;
+[ ;"!defaulto;;o;&	;[o;&	;[	o;; [ ;!["px;i˜;@;""	-4px;	i>o;; @!;![ ;i ;@;""0;	i>o;; [ ;!["px;i	;@;""4px;	i>o;;"	rgba;0;@;[o;	;0;@;{	;i ;i;i ;i ;	i>o;; @!;![ ;f0.5;@;""0.5;	i>;	i>;#{ ;@;	i>;';(o;&	;[	o;; [ ;!["px;i	;@;""4px;	i>o;; @!;![ ;i ;@;""0;	i>o;; [ ;!["px;i	;@;""4px;	i>o;;"	rgba;0;@;[o;	;0;@;{	;i ;i;i ;i ;	i>o;; @!;![ ;f0.5;@;""0.5;	i>;	i>;#{ ;@;	i>;';(;@;	i>;':
+comma;""off-canvas-overlay-box-shadow;@;	i>;
+[ ;"!defaulto;;o;;"	rgba;0;@;[o;	;0;@;{	;iˇ;i;iˇ;iˇ;	i?o;; @!;![ ;f0.20000000000000001 ôö;@;""0.2;	i?;	i?;#{ ;""off-canvas-overlay-background;@;	i?;
+[ ;"!defaulto;;o;;"	rgba;0;@;[o;	;0;@;{	;iˇ;i;iˇ;iˇ;	i@o;; @!;![ ;f0.050000000000000003 ôö;@;""	0.05;	i@;	i@;#{ ;"(off-canvas-overlay-background-hover;@;	i@;
+[ ;"!defaulto;
+;["/* Transition Variabls */;@;;;	iB;
+[ o;;o;)	;"transform 500ms ease;@;:string;	iC;"menu-slide;@;	iC;
+[ ;"!defaulto;
+;["@/* EXTEND CLASSES
+ * Remove transition flicker on phones */;@;;;	iF;
+[ o:Sass::Tree::RuleNode:
+@rule["%kill-flicker:@parsed_ruleso:"Sass::Selector::CommaSequence:@members[o:Sass::Selector::Sequence;1[o:#Sass::Selector::SimpleSequence
+:@sourceso:Set:
+@hash{ :@subject0;1[o: Sass::Selector::Placeholder;["kill-flicker:@filename" ;	iH;9@;	iH;9@;	iH;@;T;	iH:
+@tabsi ;
+[o;
+;[",/* -webkit-transform: translateZ(0); */;@;;;	iI;
+[ o:Sass::Tree::PropNode:@prop_syntax:new;[" -webkit-backface-visibility;o;);"hidden;@;;*;@;	iJ;:i ;
+[ o;
+;["1/* Basic properties for the content wraps */;@;;;	iM;
+[ o;-;.["%wrap-base;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;8;["wrap-base;9" ;	iN;9@=;	iN;9@=;	iN;@;T;	iN;:i ;
+[o;;;<;=;["position;o;);"relative;@;;*;@;	iO;:i ;
+[ o;;;<;=;["
+width;o;);"	100%;@;;*;@;	iP;:i ;
+[ o;
+;["5/* basic styles for off-canvas menu container */;@;;;	iS;
+[ o;-;.["%off-canvas-menu;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;8;["off-canvas-menu;9" ;	iT;9@];	iT;9@];	iT;@;T;	iT;:i ;
+[o;;;<;=;["
+width;o;$	;%"off_canvas_width;"off-canvas-width;@;	iU;@;	iU;:i ;
+[ o;;;<;=;["top;o;);"0;@;;*;@;	iV;:i ;
+[ o;;;<;=;["bottom;o;);"0;@;;*;@;	iW;:i ;
+[ o;;;<;=;["height;o;);"	100%;@;;*;@;	iX;:i ;
+[ o;;;<;=;["position;o;);"absolute;@;;*;@;	iY;:i ;
+[ o;;;<;=;["overflow-y;o;);"	auto;@;;*;@;	iZ;:i ;
+[ o;;;<;=;["background;o;$	;%"off_canvas_bg;"off-canvas-bg;@;	i[;@;	i[;:i ;
+[ o;;;<;=;["z-index;o;);"	1001;@;;*;@;	i\;:i ;
+[ o;;;<;=;["box-sizing;o;);"content-box;@;;*;@;	i];:i ;
+[ o;
+;["/* TRANSLATE 3D */;@;;;	i`;
+[ o:Sass::Tree::MixinDefNode;"translate3d;0;@;T;[[o;$;%"tx;"tx;@0[o;$;%"ty;"ty;@0[o;$;%"tz;"tz;@0;	ia;
+[
+o;;;<;=;["-webkit-transform;o;;"translate3d;0;@;[o;$	;%"tx;"tx;@;	ibo;$	;%"ty;"ty;@;	ibo;$	;%"tz;"tz;@;	ib;	ib;#{ ;@;	ib;:i ;
+[ o;;;<;=;["-moz-transform;o;;"translate3d;0;@;[o;$	;%"tx;"tx;@;	ico;$	;%"ty;"ty;@;	ico;$	;%"tz;"tz;@;	ic;	ic;#{ ;@;	ic;:i ;
+[ o;;;<;=;["-ms-transform;o;;"translate3d;0;@;[o;$	;%"tx;"tx;@;	ido;$	;%"ty;"ty;@;	ido;$	;%"tz;"tz;@;	id;	id;#{ ;@;	id;:i ;
+[ o;;;<;=;["-o-transform;o;;"translate3d;0;@;[o;$	;%"tx;"tx;@;	ieo;$	;%"ty;"ty;@;	ieo;$	;%"tz;"tz;@;	ie;	ie;#{ ;@;	ie;:i ;
+[ o;;;<;=;["transform;o;;"translate3d;0;@;[o;$	;%"tx;"tx;@;	ifo;$	;%"ty;"ty;@;	ifo;$	;%"tz;"tz;@;	if;	if;#{ ;@;	ig;:i ;
+[ o;
+;["J/* OFF CANVAS WRAP
+ * Wrap visible content and prevent scroll bars */;@;;;	ii;
+[ o;>;"off-canvas-wrap;0;@;T;[ ;	ik;
+[o:Sass::Tree::ExtendNode
+:@optionalF;@;	il;
+[ :@selector["%"kill-flickero;?
+;@F;@;	im;
+[ ;A["%"wrap-baseo;;;<;=;["overflow;o;);"hidden;@;;*;@;	in;:i ;
+[ o;
+;["R/* INNER WRAP
+ * Main content area that moves to reveal the off-canvas nav */;@;;;	iq;
+[ o;>;"inner-wrap;0;@;T;[ ;	is;
+[o;?
+;@F;@;	it;
+[ ;A["%"kill-flickero;?
+;@F;@;	iu;
+[ ;A["%"wrap-baseo:Sass::Tree::MixinNode;"clearfix;0;@;[ ;	iv;#{ ;
+[ o;;;<;=;["-webkit-transition;o: Sass::Script::Interpolation:@beforeo;)	;"-webkit-;@;;*;	ix:@whitespace_before0;@:@after0:@originally_textF;	ix:	@mido;$	;%"menu_slide;"menu-slide;@;	ix:@whitespace_after0;@;	ix;:i ;
+[ o;;;<;=;["-moz-transition;o;C;Do;)	;"
+-moz-;@;;*;	iy;E0;@;F0;GF;	iy;Ho;$	;%"menu_slide;"menu-slide;@;	iy;I0;@;	iy;:i ;
+[ o;;;<;=;["-ms-transition;o;C;Do;)	;"	-ms-;@;;*;	iz;E0;@;F0;GF;	iz;Ho;$	;%"menu_slide;"menu-slide;@;	iz;I0;@;	iz;:i ;
+[ o;;;<;=;["-o-transition;o;C;Do;)	;"-o-;@;;*;	i{;E0;@;F0;GF;	i{;Ho;$	;%"menu_slide;"menu-slide;@;	i{;I0;@;	i{;:i ;
+[ o;;;<;=;["transition;o;C;D0;Ei>;@;F0;GF;	i|;Ho;$	;%"menu_slide;"menu-slide;@;	i|;I0;@;	i|;:i ;
+[ o;
+;["./* TAB BAR
+ * This is the tab bar base */;@;;;	i{;
+[ o;>;"tab-bar-base;0;@;T;[ ;	i};
+[o;?
+;@F;@;	i~;
+[ ;A["%"kill-flickero;
+;["/* base styles */;@;;;	iÄ;
+[ o;;;<;=;["background;o;$	;%"tabbar_bg;"tabbar-bg;@;	iÅ;@;	iÅ;:i ;
+[ o;;;<;=;["
+color;o;$	;%"tabbar_color;"tabbar-color;@;	iÇ;@;	iÇ;:i ;
+[ o;;;<;=;["height;o;$	;%"tabbar_height;"tabbar-height;@;	iÉ;@;	iÉ;:i ;
+[ o;;;<;=;["line-height;o;$	;%"tabbar_height;"tabbar-height;@;	iÑ;@;	iÑ;:i ;
+[ o;
+;["8/* make sure it's below the .exit-offcanvas link */;@;;;	iÜ;
+[ o;;;<;=;["position;o;);"relative;@;;*;@;	iá;:i ;
+[ o;
+;["/* z-index: 999; */;@;;;	ià;
+[ o;
+;["/* Typography */;@;;;	iä;
+[ o;-;.["h1,h2,h3,h4,h5,h6;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o:Sass::Selector::Element	;["h1:@namespace0;9" ;	iã;9@¨;	ião;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["h2;K0;9@¨;	iã;9@¨;	ião;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["h3;K0;9@¨;	iã;9@¨;	ião;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["h4;K0;9@¨;	iã;9@¨;	ião;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["h5;K0;9@¨;	iã;9@¨;	ião;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["h6;K0;9@¨;	iã;9@¨;	iã;9@¨;	iã;@;T;	iã;:i ;
+[	o;;;<;=;["
+color;o;$	;%"tabbar_header_color;"tabbar-header-color;@;	iå;@;	iå;:i ;
+[ o;;;<;=;["font-weight;o;$	;%"tabbar_header_weight;"tabbar-header-weight;@;	iç;@;	iç;:i ;
+[ o;;;<;=;["line-height;o;$	;%"tabbar_header_line_height;"tabbar-header-line-height;@;	ié;@;	ié;:i ;
+[ o;;;<;=;["margin;o;$	;%"tabbar_header_margin;"tabbar-header-margin;@;	iè;@;	iè;:i ;
+[ o;-;.["h1,h2,h3,h4;/o;0;1[	o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["h1;K0;9" ;	ië;9@;	iëo;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["h2;K0;9@;	ië;9@;	iëo;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["h3;K0;9@;	ië;9@;	iëo;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["h4;K0;9@;	ië;9@;	ië;9@;	ië;@;T;	ië;:i ;
+[o;;;<;=;["font-size;o;$	;%"h5_font_size;"h5-font-size;@;	ië;@;	ië;:i ;
+[ o;
+;["w/* SMALL SECTIONS
+ * These are small sections on the left and right that contain the off-canvas toggle buttons; */;@;;;	iî;
+[ o;-;.["%tabbar-small-section;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;8;["tabbar-small-section;9" ;	iñ;9@;;	iñ;9@;;	iñ;@;T;	iñ;:i ;
+[	o;;;<;=;["
+width;o;$	;%"tabbar_height;"tabbar-height;@;	ió;@;	ió;:i ;
+[ o;;;<;=;["height;o;$	;%"tabbar_height;"tabbar-height;@;	iò;@;	iò;:i ;
+[ o;;;<;=;["position;o;);"absolute;@;;*;@;	iô;:i ;
+[ o;;;<;=;["top;o;);"0;@;;*;@;	iö;:i ;
+[ o;>;"left-small-section;0;@;T;[ ;	iù;
+[	o;?
+;@F;@;	iû;
+[ ;A["%"tabbar-small-sectiono;;;<;=;["border-right;o;$	;%"tabbar_left_section_border;"tabbar-left-section-border;@;	iü;@;	iü;:i ;
+[ o;;;<;=;["box-shadow;o;&	;[	o;; [ ;!["px;i;@;""1px;	i†o;; @!;![ ;i ;@;""0;	i†o;; @!;![ ;i ;@;""0;	i†o;;"lighten;0;@;[o;$	;%"tabbar_bg;"tabbar-bg;@;	i†o;; [ ;!["%;i;@;""10%;	i†;	i†;#{ ;@;	i†;';(;@;	i†;:i ;
+[ o;;;<;=;["	left;o;);"0;@;;*;@;	i°;:i ;
+[ o;>;"right-small-section;0;@;T;[ ;	i§;
+[	o;?
+;@F;@;	i•;
+[ ;A["%"tabbar-small-sectiono;;;<;=;["border-left;o;$	;%" tabbar_right_section_border;" tabbar-right-section-border;@;	i¶;@;	i¶;:i ;
+[ o;;;<;=;["box-shadow;o;&	;[	o;; [ ;!["px;i˙;@;""	-1px;	ißo;; @!;![ ;i ;@;""0;	ißo;; @!;![ ;i ;@;""0;	ißo;;"darken;0;@;[o;$	;%"tabbar_bg;"tabbar-bg;@;	ißo;; [ ;!["%;i;@;""10%;	iß;	iß;#{ ;@;	iß;';(;@;	iß;:i ;
+[ o;;;<;=;["
+right;o;);"0;@;;*;@;	i®;:i ;
+[ o;>;"tab-bar-section;0;@;T;[ ;	i´;
+[o;;;<;=;["padding;o;$	;%"tabbar_middle_padding;"tabbar-middle-padding;@;	i¨;@;	i¨;:i ;
+[ o;;;<;=;["position;o;);"absolute;@;;*;@;	i≠;:i ;
+[ o;;;<;=;["text-align;o;);"center;@;;*;@;	iÆ;:i ;
+[ o;;;<;=;["height;o;$	;%"tabbar_height;"tabbar-height;@;	iØ;@;	iØ;:i ;
+[ o;;;<;=;["top;o;);"0;@;;*;@;	i∞;:i ;
+[ o:Sass::Tree::MediaNode;" ;@;T:@query[o;$	;%"medium_up;"medium-up;@;	i±;	i±;:i ;
+[o;;;<;=;["text-align;o;);"	left;@;;*;@;	i≤;:i ;
+[ o;
+;["5/* still need to make these non-presntational */;@;;;	iµ;
+[ o;-;.["&.left;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o:Sass::Selector::Parent;9" ;	i∂o:Sass::Selector::Class;["	left;9@˛;	i∂;9@˛;	i∂;9@˛;	i∂;@;T;	i∂;:i ;
+[o;;;<;=;["	left;o;);"0;@;;*;@;	i∑;:i ;
+[ o;;;<;=;["
+right;o;$	;%"tabbar_height;"tabbar-height;@;	i∏;@;	i∏;:i ;
+[ o;-;.["&.right;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;N;9" ;	i∫o;O;["
+right;9@;	i∫;9@;	i∫;9@;	i∫;@;T;	i∫;:i ;
+[o;;;<;=;["	left;o;$	;%"tabbar_height;"tabbar-height;@;	iª;@;	iª;:i ;
+[ o;;;<;=;["
+right;o;);"0;@;;*;@;	iº;:i ;
+[ o;-;.["&.middle;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;N;9" ;	iæo;O;["middle;9@:;	iæ;9@:;	iæ;9@:;	iæ;@;T;	iæ;:i ;
+[o;;;<;=;["	left;o;$	;%"tabbar_height;"tabbar-height;@;	iø;@;	iø;:i ;
+[ o;;;<;=;["
+right;o;$	;%"tabbar_height;"tabbar-height;@;	i¿;@;	i¿;:i ;
+[ o;
+;["N/* OFF CANVAS LIST
+ * This is the list of links in the off-canvas menu */;@;;;	iƒ;
+[ o;>;"off-canvas-list;0;@;T;[ ;	i∆;
+[	o;;;<;=;["list-style-type;o;);"	none;@;;*;@;	i«;:i ;
+[ o;;;<;=;["padding;o;);"0;@;;*;@;	i»;:i ;
+[ o;;;<;=;["margin;o;);"0;@;;*;@;	i…;:i ;
+[ o;-;.["li;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["li;K0;9" ;	iÀ;9@u;	iÀ;9@u;	iÀ;@;T;	iÀ;:i ;
+[o;-;.["
+label;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["
+label;K0;9" ;	iÃ;9@Ö;	iÃ;9@Ö;	iÃ;@;T;	iÃ;:i ;
+[o;;;<;=;["padding;o;$	;%"off_canvas_label_padding;"off-canvas-label-padding;@;	iÕ;@;	iÕ;:i ;
+[ o;;;<;=;["
+color;o;$	;%"off_canvas_label_color;"off-canvas-label-color;@;	iŒ;@;	iŒ;:i ;
+[ o;;;<;=;["text-transform;o;$	;%"$off_canvas_label_text_transform;"$off-canvas-label-text-transform;@;	iœ;@;	iœ;:i ;
+[ o;;;<;=;["font-weight;o;$	;%"!off_canvas_label_font_weight;"!off-canvas-label-font-weight;@;	i–;@;	i–;:i ;
+[ o;;;<;=;["background;o;$	;%"off_canvas_label_bg;"off-canvas-label-bg;@;	i—;@;	i—;:i ;
+[ o;;;<;=;["border-top;o;$	;%" off_canvas_label_border_top;" off-canvas-label-border-top;@;	i“;@;	i“;:i ;
+[ o;;;<;=;["border-bottom;o;$	;%"#off_canvas_label_border_bottom;"#off-canvas-label-border-bottom;@;	i”;@;	i”;:i ;
+[ o;;;<;=;["margin;o;$	;%"off_canvas_label_margin;"off-canvas-label-margin;@;	i‘;@;	i‘;:i ;
+[ o;-;.["a;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["a;K0;9" ;	i÷;9@Õ;	i÷;9@Õ;	i÷;@;T;	i÷;:i ;
+[	o;;;<;=;["display;o;);"
+block;@;;*;@;	i◊;:i ;
+[ o;;;<;=;["padding;o;$	;%"off_canvas_link_padding;"off-canvas-link-padding;@;	iÿ;@;	iÿ;:i ;
+[ o;;;<;=;["
+color;o;$	;%"off_canvas_link_color;"off-canvas-link-color;@;	iŸ;@;	iŸ;:i ;
+[ o;;;<;=;["border-bottom;o;$	;%""off_canvas_link_border_bottom;""off-canvas-link-border-bottom;@;	i⁄;@;	i⁄;:i ;
+[ o;
+;["b/* BACK LINK
+ * This is an overlay that, when clicked, will toggle off the off canvas menu */;@;;;	i‡;
+[ o;>;"back-link;0;@;T;[ ;	i‚;
+[o;?
+;@F;@;	i„;
+[ ;A["%"kill-flickero;;;<;=;["transition;o;$	;%""off_canvas_overlay_transition;""off-canvas-overlay-transition;@;	iÂ;@;	iÂ;:i ;
+[ o;;;<;=;["cursor;o;$	;%"off_canvas_overlay_cursor;"off-canvas-overlay-cursor;@;	iÊ;@;	iÊ;:i ;
+[ o;;;<;=;["box-shadow;o;$	;%""off_canvas_overlay_box_shadow;""off-canvas-overlay-box-shadow;@;	iÁ;@;	iÁ;:i ;
+[ o;
+;["/* fill the screen */;@;;;	iÈ;
+[ o;;;<;=;["display;o;);"
+block;@;;*;@;	iÍ;:i ;
+[ o;;;<;=;["position;o;);"absolute;@;;*;@;	iÎ;:i ;
+[ o;;;<;=;["background;o;$	;%""off_canvas_overlay_background;""off-canvas-overlay-background;@;	iÏ;@;	iÏ;:i ;
+[ o;;;<;=;["top;o;);"0;@;;*;@;	iÌ;:i ;
+[ o;;;<;=;["bottom;o;);"0;@;;*;@;	iÓ;:i ;
+[ o;;;<;=;["	left;o;);"0;@;;*;@;	iÔ;:i ;
+[ o;;;<;=;["
+right;o;);"0;@;;*;@;	i;:i ;
+[ o;;;<;=;["z-index;o;);"	1002;@;;*;@;	iÒ;:i ;
+[ o;L;" ;@;T;M[o;$	;%"medium_up;"medium-up;@;	iÛ;	iÛ;:i ;
+[o;-;.["&:hover;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;N;9" ;	iÙo:Sass::Selector::Pseudo
+;["
+hover:@syntactic_type:
+class;9@T;	iÙ:	@arg0;9@T;	iÙ;9@T;	iÙ;@;T;	iÙ;:i ;
+[o;;;<;=;["background;o;$	;%"(off_canvas_overlay_background_hover;"(off-canvas-overlay-background-hover;@;	iı;@;	iı;:i ;
+[ o;
+;["[/* OFF CANVAS MENUS
+ * These are the containers that contain the off canvas content */;@;;;	i˙;
+[ o;>;"left-off-canvas-menu;0;@;T;[ ;	i¸;
+[	o;?
+;@F;@;	i˝;
+[ ;A["%"kill-flickero;?
+;@F;@;	i˛;
+[ ;A["%"off-canvas-menuo;B;"translate3d;0;@;[o;; [ ;!["%;ió;@;""
+-100%;	iˇo;; @!;![ ;i ;@;""0;	iˇo;; @!;![ ;i ;@;""0;	iˇ;	iˇ;#{ ;
+[ o;-;.["*;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o:Sass::Selector::Universal;K0;9" ;	i ;9@é;	i ;9@é;	i ;@;T;	i ;:i ;
+[o;?
+;@F;@;	i ;
+[ ;A["%"kill-flickero;>;"right-off-canvas-menu;0;@;T;[ ;	i;
+[	o;?
+;@F;@;	i;
+[ ;A["%"kill-flickero;?
+;@F;@;	i;
+[ ;A["%"off-canvas-menuo;B;"translate3d;0;@;[o;; [ ;!["%;ii;@;""	100%;	io;; @!;![ ;i ;@;""0;	io;; @!;![ ;i ;@;""0;	i;	i;#{ ;
+[ o;;;<;=;["
+right;o;);"0;@;;*;@;	i;:i ;
+[ o;
+;[" /*
+ * DEFAULT CLASSES
+ * */;@;;;	i
+;
+[ o;-;.[".off-canvas-wrap;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["off-canvas-wrap;9" ;	i;9@À;	i;9@À;	i;@;T;	i;:i ;
+[o;B;"off-canvas-wrap;0;@;[ ;	i;#{ ;
+[ o;-;.[".inner-wrap;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["inner-wrap;9" ;	i;9@‡;	i;9@‡;	i;@;T;	i;:i ;
+[o;B;"inner-wrap;0;@;[ ;	i;#{ ;
+[ o;-;.["nav.tab-bar;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["nav;K0;9" ;	io;O;["tab-bar;9@ı;	i;9@ı;	i;9@ı;	i;@;T;	i;:i ;
+[o;B;"tab-bar-base;0;@;[ ;	i;#{ ;
+[ o;-;.["section.left-small;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["section;K0;9" ;	io;O;["left-small;9@;	i;9@;	i;9@;	i;@;T;	i;:i ;
+[o;B;"left-small-section;0;@;[ ;	i;#{ ;
+[ o;-;.["section.right-small;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["section;K0;9" ;	io;O;["right-small;9@%;	i;9@%;	i;9@%;	i;@;T;	i;:i ;
+[o;B;"right-small-section;0;@;[ ;	i;#{ ;
+[ o;-;.["section.tab-bar-section;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["section;K0;9" ;	io;O;["tab-bar-section;9@=;	i;9@=;	i;9@=;	i;@;T;	i;:i ;
+[o;B;"tab-bar-section;0;@;[ ;	i;#{ ;
+[ o;
+;["/* MENU BUTTON
+ * This is a little bonus. You don't need it for off canvas to work. Mixins to be written in the future. */;@;;;	i;
+[ o;-;.["a.menu-icon;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["a;K0;9" ;	io;O;["menu-icon;9@Y;	i;9@Y;	i;9@Y;	i;@;T;	i;:i ;
+[o;;;<;=;["text-indent;o;$	;%"!tabbar_menu_icon_text_indent;"!tabbar-menu-icon-text-indent;@;	i;@;	i;:i ;
+[ o;;;<;=;["
+width;o;$	;%"tabbar_height;"tabbar-height;@;	i;@;	i;:i ;
+[ o;;;<;=;["height;o;$	;%"tabbar_height;"tabbar-height;@;	i;@;	i;:i ;
+[ o;;;<;=;["display;o;);"
+block;@;;*;@;	i;:i ;
+[ o;;;<;=;["line-height;o;$	;%"!tabbar_menu_icon_line_height;"!tabbar-menu-icon-line-height;@;	i;@;	i;:i ;
+[ o;;;<;=;["padding;o;$	;%"tabbar_menu_icon_padding;"tabbar-menu-icon-padding;@;	i ;@;	i ;:i ;
+[ o;;;<;=;["
+color;o;$	;%"topbar_menu_link_color;"topbar-menu-link-color;@;	i!;@;	i!;:i ;
+[ o;;;<;=;["position;o;);"relative;@;;*;@;	i";:i ;
+[ o;
+;[",/* this is the actual hamburger icon */;@;;;	i$;
+[ o;-;.["	span;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["	span;K0;9" ;	i%;9@¶;	i%;9@¶;	i%;@;T;	i%;:i ;
+[o;;;<;=;["position;o;);"absolute;@;;*;@;	i';:i ;
+[ o;;;<;=;["display;o;);"
+block;@;;*;@;	i(;:i ;
+[ o;;;<;=;["
+width;o;$	;%" tabbar_hamburger_icon_width;" tabbar-hamburger-icon-width;@;	i);@;	i);:i ;
+[ o;;;<;=;["height;o;);"0;@;;*;@;	i*;:i ;
+[ o;;;<;=;["	left;o;$	;%"tabbar_hamburger_icon_left;"tabbar-hamburger-icon-left;@;	i+;@;	i+;:i ;
+[ o;;;<;=;["top;o;$	;%"tabbar_hamburger_icon_top;"tabbar-hamburger-icon-top;@;	i,;@;	i,;:i ;
+[ o;
+;["*/* margin-top: $tabbar-height / 4; */;@;;;	i-;
+[ u:Sass::Tree::IfNode˜[o:Sass::Script::Variable	:@underscored_name"experimental:
+@name"experimental:@options{ :
+@linei/0[o:Sass::Tree::PropNode:@prop_syntax:new;["-webkit-box-shadow:@valueo:Sass::Script::List	;[o;	;[
+o:Sass::Script::Number:@denominator_units[ :@numerator_units[ ;i ;@	:@original"0;	i0o;;[ ;["px;i;@	;"	10px;	i0o;;@;[ ;i ;@	;"0;	i0o;;[ ;["px;i;@	;"1px;	i0o; 	;"tabbar_menu_icon_color;"tabbar-menu-icon-color;@	;	i0;@	;	i0:@separator:
+spaceo;	;[
+o;;@;[ ;i ;@	;"0;	i1o;;[ ;["px;i;@	;"	16px;	i1o;;@;[ ;i ;@	;"0;	i1o;;[ ;["px;i;@	;"1px;	i1o; 	;"tabbar_menu_icon_color;"tabbar-menu-icon-color;@	;	i1;@	;	i1;;o;	;[
+o;;@;[ ;i ;@	;"0;	i2o;;[ ;["px;i;@	;"	22px;	i2o;;@;[ ;i ;@	;"0;	i2o;;[ ;["px;i;@	;"1px;	i2o; 	;"tabbar_menu_icon_color;"tabbar-menu-icon-color;@	;	i2;@	;	i2;;;@	;	i0;:
+comma;@	;	i2:
+@tabsi :@children[ o;;;<;=;["box-shadow;o;&	;[o;&	;[
+o;; @!;![ ;i ;@;""0;	i4o;; [ ;!["px;i;@;""	10px;	i4o;; @!;![ ;i ;@;""0;	i4o;; [ ;!["px;i;@;""1px;	i4o;$	;%"tabbar_menu_icon_color;"tabbar-menu-icon-color;@;	i4;@;	i4;';(o;&	;[
+o;; @!;![ ;i ;@;""0;	i5o;; [ ;!["px;i;@;""	16px;	i5o;; @!;![ ;i ;@;""0;	i5o;; [ ;!["px;i;@;""1px;	i5o;$	;%"tabbar_menu_icon_color;"tabbar-menu-icon-color;@;	i5;@;	i5;';(o;&	;[
+o;; @!;![ ;i ;@;""0;	i6o;; [ ;!["px;i;@;""	22px;	i6o;; @!;![ ;i ;@;""0;	i6o;; [ ;!["px;i;@;""1px;	i6o;$	;%"tabbar_menu_icon_color;"tabbar-menu-icon-color;@;	i6;@;	i6;';(;@;	i4;';+;@;	i6;:i ;
+[ o;-;.["&:hover span;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;N;9" ;	i9o;P
+;["
+hover;Q;R;9@%;	i9;S0;9@%;	i9o;3
+;4o;5;6{ ;70;1[o;J	;["	span;K0;9@%;	i9;9@%;	i9;9@%;	i9;@;T;	i9;:i ;
+[u;U˜[o:Sass::Script::Variable	:@underscored_name"experimental:
+@name"experimental:@options{ :
+@linei:0[o:Sass::Tree::PropNode:@prop_syntax:new;["-webkit-box-shadow:@valueo:Sass::Script::List	;[o;	;[
+o:Sass::Script::Number:@denominator_units[ :@numerator_units[ ;i ;@	:@original"0;	i;o;;[ ;["px;i;@	;"	10px;	i;o;;@;[ ;i ;@	;"0;	i;o;;[ ;["px;i;@	;"1px;	i;o; 	;"tabbar_menu_icon_hover;"tabbar-menu-icon-hover;@	;	i;;@	;	i;:@separator:
+spaceo;	;[
+o;;@;[ ;i ;@	;"0;	i<o;;[ ;["px;i;@	;"	16px;	i<o;;@;[ ;i ;@	;"0;	i<o;;[ ;["px;i;@	;"1px;	i<o; 	;"tabbar_menu_icon_hover;"tabbar-menu-icon-hover;@	;	i<;@	;	i<;;o;	;[
+o;;@;[ ;i ;@	;"0;	i=o;;[ ;["px;i;@	;"	22px;	i=o;;@;[ ;i ;@	;"0;	i=o;;[ ;["px;i;@	;"1px;	i=o; 	;"tabbar_menu_icon_hover;"tabbar-menu-icon-hover;@	;	i=;@	;	i=;;;@	;	i;;:
+comma;@	;	i=:
+@tabsi :@children[ o;;;<;=;["box-shadow;o;&	;[o;&	;[
+o;; @!;![ ;i ;@;""0;	i?o;; [ ;!["px;i;@;""	10px;	i?o;; @!;![ ;i ;@;""0;	i?o;; [ ;!["px;i;@;""1px;	i?o;$	;%"tabbar_menu_icon_hover;"tabbar-menu-icon-hover;@;	i?;@;	i?;';(o;&	;[
+o;; @!;![ ;i ;@;""0;	i@o;; [ ;!["px;i;@;""	16px;	i@o;; @!;![ ;i ;@;""0;	i@o;; [ ;!["px;i;@;""1px;	i@o;$	;%"tabbar_menu_icon_hover;"tabbar-menu-icon-hover;@;	i@;@;	i@;';(o;&	;[
+o;; @!;![ ;i ;@;""0;	iAo;; [ ;!["px;i;@;""	22px;	iAo;; @!;![ ;i ;@;""0;	iAo;; [ ;!["px;i;@;""1px;	iAo;$	;%"tabbar_menu_icon_hover;"tabbar-menu-icon-hover;@;	iA;@;	iA;';(;@;	i?;';+;@;	iA;:i ;
+[ o;-;.[".left-off-canvas-menu;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["left-off-canvas-menu;9" ;	iE;9@Ö;	iE;9@Ö;	iE;@;T;	iE;:i ;
+[o;B;"left-off-canvas-menu;0;@;[ ;	iE;#{ ;
+[ o;-;.[".right-off-canvas-menu;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["right-off-canvas-menu;9" ;	iF;9@ö;	iF;9@ö;	iF;@;T;	iF;:i ;
+[o;B;"right-off-canvas-menu;0;@;[ ;	iF;#{ ;
+[ o;-;.["ul.off-canvas-list;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["ul;K0;9" ;	iHo;O;["off-canvas-list;9@Ø;	iH;9@Ø;	iH;9@Ø;	iH;@;T;	iH;:i ;
+[o;B;"off-canvas-list;0;@;[ ;	iH;#{ ;
+[ o;
+;["b/* ANIMATION CLASSES
+ * These classes are added with JS and trigger the actual animation.  */;@;;;	iK;
+[ o;-;.[".move-right;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["move-right;9" ;	iM;9@À;	iM;9@À;	iM;@;T;	iM;:i ;
+[o;-;.["> .inner-wrap;/o;0;1[o;2;1[">o;3
+;4o;5;6{ ;70;1[o;O;["inner-wrap;9" ;	iN;9@‹;	iN;9@‹;	iN;@;T;	iN;:i ;
+[o;B;"translate3d;0;@;[o;$	;%"off_canvas_width;"off-canvas-width;@;	iOo;; @!;![ ;i ;@;""0;	iOo;; @!;![ ;i ;@;""0;	iO;	iO;#{ ;
+[ o;-;.["a.exit-off-canvas;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["a;K0;9" ;	iQo;O;["exit-off-canvas;9@˙;	iQ;9@˙;	iQ;9@˙;	iQ;@;T;	iQ;:i ;
+[o;B;"back-link;0;@;[ ;	iQ;#{ ;
+[ o;-;.[".move-left;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["move-left;9" ;	iT;9@	;	iT;9@	;	iT;@;T;	iT;:i ;
+[o;-;.["> .inner-wrap;/o;0;1[o;2;1[">o;3
+;4o;5;6{ ;70;1[o;O;["inner-wrap;9" ;	iU;9@#	;	iU;9@#	;	iU;@;T;	iU;:i ;
+[o;B;"translate3d;0;@;[o:!Sass::Script::UnaryOperation	:@operando;$	;%"off_canvas_width;"off-canvas-width;@;	iV;@:@operator:
+minus;	iVo;; @!;![ ;i ;@;""0;	iVo;; @!;![ ;i ;@;""0;	iV;	iV;#{ ;
+[ o;-;.["a.exit-off-canvas;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;J	;["a;K0;9" ;	iYo;O;["exit-off-canvas;9@B	;	iY;9@B	;	iY;9@B	;	iY;@;T;	iY;:i ;
+[o;B;"back-link;0;@;[ ;	iY;#{ ;
+[ o;
+;["O/* IE9 HAX
+ * Womp womp! IE9 doesn't do CSS transforms. Let's fix this. */;@;;;	i\;
+[ o;-;.[".lt-ie10;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["lt-ie10;9" ;	i^;9@^	;	i^;9@^	;	i^;@;T;	i^;:i ;
+[o;
+;["1/* move off canvas menus off the viewport */;@;;;	i`;
+[ o;-;.[".left-off-canvas-menu;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["left-off-canvas-menu;9" ;	ia;9@r	;	ia;9@r	;	ia;@;T;	ia;:i ;
+[o;;;<;=;["	left;o;V	;Wo;$	;%"off_canvas_width;"off-canvas-width;@;	ia;@;X;Y;	ia;@;	ia;:i ;
+[ o;-;.[".right-off-canvas-menu;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["right-off-canvas-menu;9" ;	ib;9@ä	;	ib;9@ä	;	ib;@;T;	ib;:i ;
+[o;;;<;=;["
+right;o;V	;Wo;$	;%"off_canvas_width;"off-canvas-width;@;	ib;@;X;Y;	ib;@;	ib;:i ;
+[ o;
+;["/* Snap them in place */;@;;;	id;
+[ o;-;.[".move-left > .inner-wrap;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["move-left;9" ;	ie;9@¶	;	ie">o;3
+;4o;5;6{ ;70;1[o;O;["inner-wrap;9@¶	;	ie;9@¶	;	ie;9@¶	;	ie;@;T;	ie;:i ;
+[o;;;<;=;["
+right;o;$	;%"off_canvas_width;"off-canvas-width;@;	ie;@;	ie;:i ;
+[ o;-;.[".move-right > .inner-wrap;/o;0;1[o;2;1[o;3
+;4o;5;6{ ;70;1[o;O;["move-right;9" ;	if;9@≈	;	if">o;3
+;4o;5;6{ ;70;1[o;O;["inner-wrap;9@≈	;	if;9@≈	;	if;9@≈	;	if;@;T;	if;:i ;
+[o;;;<;=;["	left;o;$	;%"off_canvas_width;"off-canvas-width;@;	if;@;	if;:i ;
+[ 

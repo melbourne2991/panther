@@ -31,10 +31,22 @@ sprangularApp.config(['$stateProvider', function($stateProvider) {
 		controller: 'productsController'
 	})
 
+	.state('store.taxon_show', {
+		url: '/:taxonomy/:taxon',
+		templateUrl:  'partials/taxon.html',
+		controller: 'taxonsController',
+	})
+
 	.state('store.taxonomy_show', {
-		url: '/taxonomies/:taxonomy?taxon',
+		url: '/:taxonomy',
 		templateUrl:  'partials/taxonomy.html',
 		controller: 'taxonomiesController',
 	});
+
+	// .state('store.taxonomy_show', {
+	// 	url: '/taxonomies/:taxonomy?taxon',
+	// 	templateUrl:  'partials/taxonomy.html',
+	// 	controller: 'taxonomiesController',
+	// });
 
 }]);

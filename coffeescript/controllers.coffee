@@ -10,34 +10,43 @@ sprangularControllers.controller('productsController', ['$scope', '$state','$sta
 ])
 
 sprangularControllers.controller('taxonomiesController', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
+
 	$scope.root = Defaults.root
 
-	id = [$stateParams.taxonomy]
-	id.push($stateParams.taxon) if $stateParams.taxon
+	permalink = $stateParams.taxonomy
 
-	Taxonomy.findByPermalink(id).then( (response) ->
-		if $stateParams.taxon
-			taxon = response[1]
-			$scope.title = taxon.name
-
-			Taxonomy.listProducts(taxon.id).$promise.then( (response) ->
-				$scope.products = response.products
-			)
-		else
-			taxonomy = response[0]
-			$scope.title = taxonomy.name
-			$scope.taxons = taxonomy.taxons
-	);
+	Taxonomy.findByPermalink(permalink).then( (response) ->
+		taxonomy = response
+		$scope.title = taxonomy.name
+		$scope.taxons = taxonomy.taxons
+	)
 ])
+
+sprangularControllers.controller('taxonsController', ['$scope', '$state','$stateParams', 'Taxon', 'Defaults', ($scope, $state, $stateParams, Taxon, Defaults) ->
+
+	$scope.root = Defaults.root
+
+	permalink = $stateParams.taxonomy + '/' + $stateParams.taxon
+
+	Taxon.findByPermalink(permalink).then( (response) ->
+		taxon = response
+		$scope.title = taxon.name
+
+		Taxon.listProducts(taxon.id).$promise.then( (response) ->
+			$scope.products = response.products
+		)
+	)
+
+])
+
 
 sprangularControllers.controller('storeView', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
 	
-	$scope.path = Defaults.root + $state.current.url + '/taxonomies/'
+	$scope.path = Defaults.root + '/store/'
 
 	Taxonomy.taxonomies_with_meta().$promise.then( (response) ->
 		$scope.taxonomies = response.taxonomies
 	)
 
-	console.log($state)
 ])
 

@@ -40,19 +40,38 @@ sprangularServices.factory('Taxonomy', ($resource, $http, Defaults) ->
 		this.findByPermalink = (permalink) ->
 			this.taxonomies_with_meta().$promise.then( (response) ->
 				current_taxonomy = null
-				current_taxon = null
 
 				angular.forEach(response.taxonomies, (taxonomy) ->
 					taxonomy = taxonomy.root
-					current_taxonomy = taxonomy if taxonomy.permalink == permalink[0]
-
-					if permalink[1]
-						angular.forEach(taxonomy.taxons, (taxon) ->
-							current_taxon = taxon if taxon.permalink == permalink[0] + '/' + permalink[1]
-						)
+					current_taxonomy = taxonomy if taxonomy.permalink == permalink
 				)
 
-				return [current_taxonomy, current_taxon]
+				return current_taxonomy
+			)
+)
+
+sprangularServices.factory('Taxon', ($resource, $http, Defaults) -> 
+
+	class Taxon
+		constructor: ->
+			@service = $resource(Defaults.api_url + 'taxons/:id',	{id: '@id'})
+
+		this.taxons_with_meta = ->
+			service = $resource(Defaults.api_url + 'taxons')
+			service.get()
+
+		this.findByPermalink = (permalink) ->
+			this.taxons_with_meta().$promise.then( (response) ->
+				current_taxon = null
+
+				console.log(response)
+				console.log(permalink)
+
+				angular.forEach(response.taxons, (taxon) ->
+					current_taxon = taxon if taxon.permalink == permalink
+				)
+
+				return current_taxon
 			)
 
 		this.listProducts = (taxon_id) ->
