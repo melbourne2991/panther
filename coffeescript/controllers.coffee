@@ -6,11 +6,9 @@ sprangularControllers.controller('productsController', ['$scope', '$state','$sta
 	Product.find($stateParams.id).$promise.then( (response) ->
 		$scope.currentProduct = response 
 	)
-
 ])
 
 sprangularControllers.controller('taxonomiesController', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
-
 	$scope.root = Defaults.root
 
 	permalink = $stateParams.taxonomy
@@ -23,8 +21,8 @@ sprangularControllers.controller('taxonomiesController', ['$scope', '$state','$s
 ])
 
 sprangularControllers.controller('taxonsController', ['$scope', '$state','$stateParams', 'Taxon', 'Defaults', ($scope, $state, $stateParams, Taxon, Defaults) ->
-
 	$scope.root = Defaults.root
+	$scope.products_path = Defaults.products_path
 
 	permalink = $stateParams.taxonomy + '/' + $stateParams.taxon
 
@@ -36,13 +34,12 @@ sprangularControllers.controller('taxonsController', ['$scope', '$state','$state
 			$scope.products = response.products
 		)
 	)
-
 ])
 
 
 sprangularControllers.controller('storeView', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
 	
-	$scope.path = Defaults.root + '/store/'
+	$scope.store_path = Defaults.store_path
 
 	Taxonomy.taxonomies_with_meta().$promise.then( (response) ->
 		$scope.taxonomies = response.taxonomies

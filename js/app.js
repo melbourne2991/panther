@@ -43,10 +43,4 @@ sprangularApp.config(['$stateProvider', function($stateProvider) {
 		controller: 'taxonomiesController',
 	});
 
-	// .state('store.taxonomy_show', {
-	// 	url: '/taxonomies/:taxonomy?taxon',
-	// 	templateUrl:  'partials/taxonomy.html',
-	// 	controller: 'taxonomiesController',
-	// });
-
 }]);

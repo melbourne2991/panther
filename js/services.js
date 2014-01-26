@@ -5,9 +5,15 @@
   sprangularServices = angular.module('sprangularServices', ['ngResource']);
 
   sprangularServices.service('Defaults', function() {
+    var root, store_root;
+    root = 'http://0.0.0.0:3000/#';
+    store_root = root + '/store';
     return {
-      root: 'http://0.0.0.0:3000/#',
-      api_url: "http://0.0.0.0:3000/api/"
+      api_url: "http://0.0.0.0:3000/api/",
+      root: root,
+      store_root: store_root,
+      store_path: store_root + '/',
+      products_path: store_root + '/products/'
     };
   });
 

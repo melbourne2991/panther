@@ -31,6 +31,7 @@
     '$scope', '$state', '$stateParams', 'Taxon', 'Defaults', function($scope, $state, $stateParams, Taxon, Defaults) {
       var permalink;
       $scope.root = Defaults.root;
+      $scope.products_path = Defaults.products_path;
       permalink = $stateParams.taxonomy + '/' + $stateParams.taxon;
       return Taxon.findByPermalink(permalink).then(function(response) {
         var taxon;
@@ -45,7 +46,7 @@
 
   sprangularControllers.controller('storeView', [
     '$scope', '$state', '$stateParams', 'Taxonomy', 'Defaults', function($scope, $state, $stateParams, Taxonomy, Defaults) {
-      $scope.path = Defaults.root + '/store/';
+      $scope.store_path = Defaults.store_path;
       return Taxonomy.taxonomies_with_meta().$promise.then(function(response) {
         return $scope.taxonomies = response.taxonomies;
       });

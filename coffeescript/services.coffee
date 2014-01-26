@@ -1,12 +1,19 @@
 sprangularServices = angular.module('sprangularServices', ['ngResource'])
 
 sprangularServices.service('Defaults', -> 
-	root: 'http://0.0.0.0:3000/#',
-	api_url: "http://0.0.0.0:3000/api/"
+	root = 'http://0.0.0.0:3000/#';
+	store_root = root + '/store';
+	return {
+		api_url: "http://0.0.0.0:3000/api/",
+		root: root,
+		store_root:    store_root,
+		store_path:    store_root + '/'
+		products_path: store_root + '/products/'		
+	}
+
 )
 
 sprangularServices.factory('Product', ($resource, Defaults) -> 
-
 	class Product
 		constructor: ->
 			@service = $resource(Defaults.api_url + 'products/:id',	{id: '@id'})
