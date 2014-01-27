@@ -12,6 +12,25 @@ pantherServices.service('Defaults', ->
 	}
 )
 
+pantherServices.factory('Cart', ->
+	class Cart
+		this.addToCart = (item) ->
+			item_already_in_cart = null
+
+			angular.forEach(this.currentItems, (current_item) ->
+				if item.id == current_item.id
+					item_already_in_cart = true
+			)
+
+			if !item_already_in_cart
+				this.currentItems.push(item)
+				true
+			else
+				"Item Already In Cart"
+
+		this.currentItems = []	
+)
+
 pantherServices.factory('Product', ($resource, Defaults) -> 
 	class Product
 		constructor: ->
@@ -57,7 +76,6 @@ pantherServices.factory('Taxonomy', ($resource, $http, Defaults) ->
 )
 
 pantherServices.factory('Taxon', ($resource, $http, Defaults) -> 
-
 	class Taxon
 		constructor: ->
 			@service = $resource(Defaults.api_url + 'taxons/:id',	{id: '@id'})

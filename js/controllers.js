@@ -5,15 +5,20 @@
   pantherControllers = angular.module('pantherControllers', ['pantherServices', 'ngRoute', 'ui.router']);
 
   pantherControllers.controller('productsController', [
-    '$scope', '$state', '$stateParams', 'Product', 'Taxonomy', 'Defaults', function($scope, $state, $stateParams, Product, Taxonomy, Defaults) {
+    '$scope', '$state', '$stateParams', 'Product', 'Cart', 'Taxonomy', 'Defaults', function($scope, $state, $stateParams, Product, Cart, Taxonomy, Defaults) {
       $scope.root = Defaults.root;
-      return Product.find($stateParams.id).$promise.then(function(response) {
+      Product.find($stateParams.id).$promise.then(function(response) {
         return angular.forEach(response.variants, function(variant) {
           if (variant.is_master) {
             return $scope.product = variant;
           }
         });
       });
+      return $scope.addToCart = function(item) {
+        if (Cart.addToCart(item) !== true) {
+          return $scope.errorMessage = Cart.addToCart(item);
+        }
+      };
     }
   ]);
 

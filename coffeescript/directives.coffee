@@ -1,4 +1,4 @@
-pantherDirectives = angular.module('pantherDirectives', [])
+pantherDirectives = angular.module('pantherDirectives', ['pantherServices'])
 
 pantherDirectives.directive('productImageGallery', ->
 	scope: {
@@ -48,15 +48,18 @@ pantherDirectives.directive('taxonomiesList', ['Taxonomy', 'Defaults', (Taxonomy
 	scope: {},
 	templateUrl: 'partials/directives/taxonomies_list.html',
 	controller: ($scope) ->
-		console.log('shneh')
-
 		$scope.store_path = Defaults.store_path
 
 		Taxonomy.taxonomies_with_meta().$promise.then( (response) ->
 			$scope.taxonomies = response.taxonomies
-
-			console.log($scope.taxonomies)
 		)
 	,
 	link: (scope, el, attrs) ->
+])
+
+pantherDirectives.directive('shoppingCart', ['Cart', (Cart) ->
+	scope: {}
+	templateUrl: 'partials/directives/shopping_cart.html',
+	controller: ($scope) ->
+		$scope.cartItems = Cart.currentItems
 ])

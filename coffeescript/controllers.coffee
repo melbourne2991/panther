@@ -1,6 +1,6 @@
 pantherControllers = angular.module('pantherControllers', ['pantherServices', 'ngRoute', 'ui.router'])
 
-pantherControllers.controller('productsController', ['$scope', '$state','$stateParams', 'Product', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Product, Taxonomy, Defaults) ->
+pantherControllers.controller('productsController', ['$scope', '$state','$stateParams', 'Product', 'Cart', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Product, Cart, Taxonomy, Defaults) ->
 	$scope.root = Defaults.root
 	
 	Product.find($stateParams.id).$promise.then( (response) ->
@@ -9,6 +9,11 @@ pantherControllers.controller('productsController', ['$scope', '$state','$stateP
 				$scope.product = variant 
 		)
 	)
+
+	$scope.addToCart = (item) ->
+		# addToCart will return an error if item is not added successfully.
+		if Cart.addToCart(item) != true
+			$scope.errorMessage = Cart.addToCart(item) 
 ])
 
 pantherControllers.controller('taxonomiesController', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->

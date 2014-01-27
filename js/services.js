@@ -17,6 +17,35 @@
     };
   });
 
+  pantherServices.factory('Cart', function() {
+    var Cart;
+    return Cart = (function() {
+
+      function Cart() {}
+
+      Cart.addToCart = function(item) {
+        var item_already_in_cart;
+        item_already_in_cart = null;
+        angular.forEach(this.currentItems, function(current_item) {
+          if (item.id === current_item.id) {
+            return item_already_in_cart = true;
+          }
+        });
+        if (!item_already_in_cart) {
+          this.currentItems.push(item);
+          return true;
+        } else {
+          return "Item Already In Cart";
+        }
+      };
+
+      Cart.currentItems = [];
+
+      return Cart;
+
+    })();
+  });
+
   pantherServices.factory('Product', function($resource, Defaults) {
     var Product;
     return Product = (function() {

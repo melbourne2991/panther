@@ -2,7 +2,7 @@
 (function() {
   var pantherDirectives;
 
-  pantherDirectives = angular.module('pantherDirectives', []);
+  pantherDirectives = angular.module('pantherDirectives', ['pantherServices']);
 
   pantherDirectives.directive('productImageGallery', function() {
     return {
@@ -56,14 +56,24 @@
         scope: {},
         templateUrl: 'partials/directives/taxonomies_list.html',
         controller: function($scope) {
-          console.log('shneh');
           $scope.store_path = Defaults.store_path;
           return Taxonomy.taxonomies_with_meta().$promise.then(function(response) {
-            $scope.taxonomies = response.taxonomies;
-            return console.log($scope.taxonomies);
+            return $scope.taxonomies = response.taxonomies;
           });
         },
         link: function(scope, el, attrs) {}
+      };
+    }
+  ]);
+
+  pantherDirectives.directive('shoppingCart', [
+    'Cart', function(Cart) {
+      return {
+        scope: {},
+        templateUrl: 'partials/directives/shopping_cart.html',
+        controller: function($scope) {
+          return $scope.cartItems = Cart.currentItems;
+        }
       };
     }
   ]);
