@@ -2,15 +2,15 @@
 
 var $stateProviderReference;
 
-var sprangularApp = angular.module('sprangularApp',[
+var pantherApp = angular.module('pantherApp',[
 	'ui.router',
 	'ngResource',
-	'sprangularControllers',
-    'sprangularServices',
-	'sprangularDirectives'
+	'pantherControllers',
+    'pantherServices',
+	'pantherDirectives'
 ]);
 
-sprangularApp.config(['$stateProvider', function($stateProvider) {
+pantherApp.config(['$stateProvider', function($stateProvider) {
 
 	$stateProvider
 

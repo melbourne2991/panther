@@ -5,7 +5,7 @@ describe('productsController', function() {
 	var scope, $httpBackend, createController;
 	var api_root = 'http://0.0.0.0:3000/api/';
 
-	beforeEach(angular.mock.module('sprangularApp'));
+	beforeEach(angular.mock.module('pantherApp'));
 	beforeEach(inject(function($injector) {
 		$httpBackend = $injector.get('$httpBackend');
 
@@ -47,7 +47,7 @@ describe('taxonomiesController', function() {
 	var scope, $httpBackend, createController;
 	var api_root = 'http://0.0.0.0:3000/api/';
 
-	beforeEach(angular.mock.module('sprangularApp'));
+	beforeEach(angular.mock.module('pantherApp'));
 	beforeEach(inject(function($injector) {
 		$httpBackend = $injector.get('$httpBackend');
 

@@ -6,7 +6,7 @@ describe('productDirective', function() {
 	var scope, el, directive, $httpBackend, compiler, compiled, html;
 
 	beforeEach(module('partials/product/_product.html'));
-	beforeEach(angular.mock.module('sprangularApp'));
+	beforeEach(angular.mock.module('pantherApp'));
 
 	beforeEach(function() {
 

@@ -1,6 +1,6 @@
-sprangularServices = angular.module('sprangularServices', ['ngResource'])
+pantherServices = angular.module('pantherServices', ['ngResource'])
 
-sprangularServices.service('Defaults', -> 
+pantherServices.service('Defaults', -> 
 	root = 'http://0.0.0.0:3000/#';
 	store_root = root + '';
 	return {
@@ -13,7 +13,7 @@ sprangularServices.service('Defaults', ->
 
 )
 
-sprangularServices.factory('Product', ($resource, Defaults) -> 
+pantherServices.factory('Product', ($resource, Defaults) -> 
 	class Product
 		constructor: ->
 			@service = $resource(Defaults.api_url + 'products/:id',	{id: '@id'})
@@ -27,7 +27,7 @@ sprangularServices.factory('Product', ($resource, Defaults) ->
 			service.get()
 )
 
-sprangularServices.factory('Taxonomy', ($resource, $http, Defaults) -> 
+pantherServices.factory('Taxonomy', ($resource, $http, Defaults) -> 
 
 	class Taxonomy
 		constructor: ->
@@ -57,7 +57,7 @@ sprangularServices.factory('Taxonomy', ($resource, $http, Defaults) ->
 			)
 )
 
-sprangularServices.factory('Taxon', ($resource, $http, Defaults) -> 
+pantherServices.factory('Taxon', ($resource, $http, Defaults) -> 
 
 	class Taxon
 		constructor: ->

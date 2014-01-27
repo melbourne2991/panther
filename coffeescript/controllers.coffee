@@ -1,6 +1,6 @@
-sprangularControllers = angular.module('sprangularControllers', ['sprangularServices', 'ngRoute', 'ui.router'])
+pantherControllers = angular.module('pantherControllers', ['pantherServices', 'ngRoute', 'ui.router'])
 
-sprangularControllers.controller('productsController', ['$scope', '$state','$stateParams', 'Product', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Product, Taxonomy, Defaults) ->
+pantherControllers.controller('productsController', ['$scope', '$state','$stateParams', 'Product', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Product, Taxonomy, Defaults) ->
 	$scope.root = Defaults.root
 	
 	Product.find($stateParams.id).$promise.then( (response) ->
@@ -11,7 +11,7 @@ sprangularControllers.controller('productsController', ['$scope', '$state','$sta
 	)
 ])
 
-sprangularControllers.controller('taxonomiesController', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
+pantherControllers.controller('taxonomiesController', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
 	$scope.root = Defaults.root
 
 	permalink = $stateParams.taxonomy
@@ -23,7 +23,7 @@ sprangularControllers.controller('taxonomiesController', ['$scope', '$state','$s
 	)
 ])
 
-sprangularControllers.controller('taxonsController', ['$scope', '$state','$stateParams', 'Taxon', 'Defaults', ($scope, $state, $stateParams, Taxon, Defaults) ->
+pantherControllers.controller('taxonsController', ['$scope', '$state','$stateParams', 'Taxon', 'Defaults', ($scope, $state, $stateParams, Taxon, Defaults) ->
 	$scope.root = Defaults.root
 	$scope.products_path = Defaults.products_path
 
@@ -40,7 +40,7 @@ sprangularControllers.controller('taxonsController', ['$scope', '$state','$state
 ])
 
 
-sprangularControllers.controller('storeView', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
+pantherControllers.controller('storeView', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
 	
 	$scope.store_path = Defaults.store_path
 

@@ -1,6 +1,6 @@
-sprangularDirectives = angular.module('sprangularDirectives', [])
+pantherDirectives = angular.module('pantherDirectives', [])
 
-sprangularDirectives.directive('productImageGallery', ->
+pantherDirectives.directive('productImageGallery', ->
 	scope: {
 		images: '='
 	},
@@ -20,6 +20,7 @@ sprangularDirectives.directive('productImageGallery', ->
 				)
 
 				$scope.sorted_images = new Array()
+				
 				for i in image_positions
 					if i
 						$scope.sorted_images.push(i)
