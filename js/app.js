@@ -1,7 +1,5 @@
 'use strict';
 
-var $stateProviderReference;
-
 var pantherApp = angular.module('pantherApp',[
 	'ui.router',
 	'ngResource',
@@ -17,18 +15,20 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 	.state('store', {
 		url: '/',
 		templateUrl: 'partials/store.html',
-		controller: 'storeView'
 	})
 
 	.state('store.product_show', {
 		url: 'products/:id',
 		views: {
 			'main': {
-				templateUrl: 'partials/product.html',
+				templateUrl: 'partials/product/product.html',
 				controller: 'productsController'
 			},
+			'header' : {
+				templateUrl: 'partials/layout/header.html'
+			},
 			'sidebar': {
-				templateUrl: 'partials/sidebar.html'
+				templateUrl: 'partials/layout/sidebar.html'
 			}
 		}
 	})
@@ -37,11 +37,14 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 		url: ':taxonomy/:taxon',
 		views: {
 			'main': {
-				templateUrl:  'partials/taxon.html',
+				templateUrl:  'partials/taxon/taxon.html',
 				controller: 'taxonsController',
 			},
+			'header' : {
+				templateUrl: 'partials/layout/header.html'
+			},
 			'sidebar': {
-				templateUrl: 'partials/sidebar.html'
+				templateUrl: 'partials/layout/sidebar.html'
 			}
 		}
 	})
@@ -50,11 +53,14 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 		url: ':taxonomy',
 		views : {
 			'main': {
-				templateUrl:  'partials/taxonomy.html',
+				templateUrl:  'partials/taxonomy/taxonomy.html',
 				controller: 'taxonomiesController',
 			},
+			'header' : {
+				templateUrl: 'partials/layout/header.html'
+			},
 			'sidebar': {
-				templateUrl: 'partials/sidebar.html'
+				templateUrl: 'partials/layout/sidebar.html'
 			}			
 		}
 	});

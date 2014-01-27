@@ -48,13 +48,4 @@
     }
   ]);
 
-  pantherControllers.controller('storeView', [
-    '$scope', '$state', '$stateParams', 'Taxonomy', 'Defaults', function($scope, $state, $stateParams, Taxonomy, Defaults) {
-      $scope.store_path = Defaults.store_path;
-      return Taxonomy.taxonomies_with_meta().$promise.then(function(response) {
-        return $scope.taxonomies = response.taxonomies;
-      });
-    }
-  ]);
-
 }).call(this);

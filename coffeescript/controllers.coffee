@@ -38,15 +38,3 @@ pantherControllers.controller('taxonsController', ['$scope', '$state','$statePar
 		)
 	)
 ])
-
-
-pantherControllers.controller('storeView', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->
-	
-	$scope.store_path = Defaults.store_path
-
-	Taxonomy.taxonomies_with_meta().$promise.then( (response) ->
-		$scope.taxonomies = response.taxonomies
-	)
-
-])
-

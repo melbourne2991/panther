@@ -1,6 +1,1 @@
-<div class="sidebar" data-ng-repeat="taxonomy in taxonomies">
-	<h2>{{ taxonomy.name }}</h2>
-	<ul>
-		<li data-ng-repeat="taxon in taxonomy.root.taxons"><a href="{{ store_path + taxon.permalink }}">{{ taxon.name }}</a></li>
-	</ul>
-</div>
+<div data-taxonomies-list></div>

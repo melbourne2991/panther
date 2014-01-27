@@ -10,7 +10,6 @@ pantherServices.service('Defaults', ->
 		store_path:    store_root + '/'
 		products_path: store_root + '/products/'		
 	}
-
 )
 
 pantherServices.factory('Product', ($resource, Defaults) -> 

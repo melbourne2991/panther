@@ -9,7 +9,7 @@
       scope: {
         images: '='
       },
-      templateUrl: 'partials/product/_product.html',
+      templateUrl: 'partials/directives/product_image_gallery.html',
       controller: function($scope) {
         return $scope.$watch('images', function(newVal) {
           var i, image_positions, _i, _len;
@@ -49,5 +49,23 @@
       link: function(scope, el, attrs) {}
     };
   });
+
+  pantherDirectives.directive('taxonomiesList', [
+    'Taxonomy', 'Defaults', function(Taxonomy, Defaults) {
+      return {
+        scope: {},
+        templateUrl: 'partials/directives/taxonomies_list.html',
+        controller: function($scope) {
+          console.log('shneh');
+          $scope.store_path = Defaults.store_path;
+          return Taxonomy.taxonomies_with_meta().$promise.then(function(response) {
+            $scope.taxonomies = response.taxonomies;
+            return console.log($scope.taxonomies);
+          });
+        },
+        link: function(scope, el, attrs) {}
+      };
+    }
+  ]);
 
 }).call(this);

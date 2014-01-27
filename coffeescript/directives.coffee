@@ -4,10 +4,11 @@ pantherDirectives.directive('productImageGallery', ->
 	scope: {
 		images: '='
 	},
-	templateUrl: 'partials/product/_product.html',
+	templateUrl: 'partials/directives/product_image_gallery.html',
 	controller: ($scope) ->
 		$scope.$watch('images', (newVal) ->
 			if newVal
+
 				image_positions = new Array()
 
 				angular.forEach($scope.images, (image) ->
@@ -20,7 +21,7 @@ pantherDirectives.directive('productImageGallery', ->
 				)
 
 				$scope.sorted_images = new Array()
-				
+
 				for i in image_positions
 					if i
 						$scope.sorted_images.push(i)
@@ -42,3 +43,20 @@ pantherDirectives.directive('productImageGallery', ->
 	link: (scope, el, attrs) ->
 
 )
+
+pantherDirectives.directive('taxonomiesList', ['Taxonomy', 'Defaults', (Taxonomy, Defaults) ->
+	scope: {},
+	templateUrl: 'partials/directives/taxonomies_list.html',
+	controller: ($scope) ->
+		console.log('shneh')
+
+		$scope.store_path = Defaults.store_path
+
+		Taxonomy.taxonomies_with_meta().$promise.then( (response) ->
+			$scope.taxonomies = response.taxonomies
+
+			console.log($scope.taxonomies)
+		)
+	,
+	link: (scope, el, attrs) ->
+])
