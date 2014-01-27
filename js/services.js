@@ -7,7 +7,7 @@
   sprangularServices.service('Defaults', function() {
     var root, store_root;
     root = 'http://0.0.0.0:3000/#';
-    store_root = root + '/store';
+    store_root = root + '';
     return {
       api_url: "http://0.0.0.0:3000/api/",
       root: root,

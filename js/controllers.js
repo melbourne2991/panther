@@ -8,7 +8,11 @@
     '$scope', '$state', '$stateParams', 'Product', 'Taxonomy', 'Defaults', function($scope, $state, $stateParams, Product, Taxonomy, Defaults) {
       $scope.root = Defaults.root;
       return Product.find($stateParams.id).$promise.then(function(response) {
-        return $scope.currentProduct = response;
+        return angular.forEach(response.variants, function(variant) {
+          if (variant.is_master) {
+            return $scope.product = variant;
+          }
+        });
       });
     }
   ]);

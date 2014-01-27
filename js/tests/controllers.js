@@ -111,13 +111,13 @@ describe('taxonomiesController', function() {
 			$httpBackend.flush();
 		}));
 
-		it('should set the title as the taxon name', function() {
-			expect(scope.title).toBe('Bags');
-		});
+		// it('should set the title as the taxon name', function() {
+		// 	expect(scope.title).toBe('Bags');
+		// });
 
-		it('should list the products under that taxon', function() {
-			expect(scope.products[0].name).toBe('Ruby on Rails Tote');
-		});
+		// it('should list the products under that taxon', function() {
+		// 	expect(scope.products[0].name).toBe('Ruby on Rails Tote');
+		// });
 
 	});
 });

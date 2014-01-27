@@ -1,15 +1,7 @@
 <div class="product">
-
 	<img ng-src="{{ sorted_images[currentImage].large }}" ng-click="updateCurrentImage()">
 
 	<div class="thumbnails">
 		<img ng-repeat="image in sorted_images" ng-src="{{ image.small }}" class="image {{ $index }}" ng-click="showClickedImage($index)">
 	</div>
-
-	<div class="name"><h2>{{ product.name }}</h2></div>
-	<div class="price">{{ product.price }}</div>
-	<div class="description">{{ product.description }}</div>
-
-	<button class="add-to-cart">Add to Cart</button>
-
 </div>

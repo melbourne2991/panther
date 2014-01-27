@@ -1,31 +1,28 @@
 sprangularDirectives = angular.module('sprangularDirectives', [])
 
-sprangularDirectives.directive('productDirective', ->
+sprangularDirectives.directive('productImageGallery', ->
 	scope: {
-		product: '='
+		images: '='
 	},
 	templateUrl: 'partials/product/_product.html',
 	controller: ($scope) ->
-		$scope.$watch('product', (newVal) ->
-			if newVal 
-				angular.forEach($scope.product.variants, (variant) ->
-					if variant.is_master
-						image_positions = new Array()
+		$scope.$watch('images', (newVal) ->
+			if newVal
+				image_positions = new Array()
 
-						angular.forEach(variant.images, (image) ->
-							image_positions[image.position] = {
-								mini: image.mini_url,
-								small: image.small_url,
-								medium: image.product_url,
-								large: image.large_url
-							} 
-						)
-
-						$scope.sorted_images = new Array()
-						for i in image_positions
-							if i
-								$scope.sorted_images.push(i)
+				angular.forEach($scope.images, (image) ->
+					image_positions[image.position] = {
+						mini: image.mini_url,
+						small: image.small_url,
+						medium: image.product_url,
+						large: image.large_url
+					} 
 				)
+
+				$scope.sorted_images = new Array()
+				for i in image_positions
+					if i
+						$scope.sorted_images.push(i)
 
 				$scope.currentImage = 0
 

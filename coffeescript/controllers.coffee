@@ -4,7 +4,10 @@ sprangularControllers.controller('productsController', ['$scope', '$state','$sta
 	$scope.root = Defaults.root
 	
 	Product.find($stateParams.id).$promise.then( (response) ->
-		$scope.currentProduct = response 
+		angular.forEach(response.variants, (variant) ->
+			if variant.is_master
+				$scope.product = variant 
+		)
 	)
 ])
 

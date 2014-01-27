@@ -4,40 +4,32 @@
 
   sprangularDirectives = angular.module('sprangularDirectives', []);
 
-  sprangularDirectives.directive('productDirective', function() {
+  sprangularDirectives.directive('productImageGallery', function() {
     return {
       scope: {
-        product: '='
+        images: '='
       },
       templateUrl: 'partials/product/_product.html',
       controller: function($scope) {
-        return $scope.$watch('product', function(newVal) {
+        return $scope.$watch('images', function(newVal) {
+          var i, image_positions, _i, _len;
           if (newVal) {
-            angular.forEach($scope.product.variants, function(variant) {
-              var i, image_positions, _i, _len, _results;
-              if (variant.is_master) {
-                image_positions = new Array();
-                angular.forEach(variant.images, function(image) {
-                  return image_positions[image.position] = {
-                    mini: image.mini_url,
-                    small: image.small_url,
-                    medium: image.product_url,
-                    large: image.large_url
-                  };
-                });
-                $scope.sorted_images = new Array();
-                _results = [];
-                for (_i = 0, _len = image_positions.length; _i < _len; _i++) {
-                  i = image_positions[_i];
-                  if (i) {
-                    _results.push($scope.sorted_images.push(i));
-                  } else {
-                    _results.push(void 0);
-                  }
-                }
-                return _results;
-              }
+            image_positions = new Array();
+            angular.forEach($scope.images, function(image) {
+              return image_positions[image.position] = {
+                mini: image.mini_url,
+                small: image.small_url,
+                medium: image.product_url,
+                large: image.large_url
+              };
             });
+            $scope.sorted_images = new Array();
+            for (_i = 0, _len = image_positions.length; _i < _len; _i++) {
+              i = image_positions[_i];
+              if (i) {
+                $scope.sorted_images.push(i);
+              }
+            }
             $scope.currentImage = 0;
             $scope.updateCurrentImage = function() {
               if ($scope.currentImage >= ($scope.sorted_images.length - 1)) {
