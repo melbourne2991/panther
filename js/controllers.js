@@ -75,7 +75,7 @@ pantherControllers.controller('taxonsController', [
 			Taxon.listProducts(taxon.id).$promise.then(function(response) {
 
 				$scope.products = response.products;
-				
+
 			});
 
 		});

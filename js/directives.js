@@ -18,6 +18,7 @@ pantherDirectives.directive('productImageGallery', function() {
 					image_positions = new Array();
 
 					angular.forEach($scope.images, function(image) {
+
 						image_positions[image.position] = {
 
 							mini: image.mini_url,
@@ -29,6 +30,7 @@ pantherDirectives.directive('productImageGallery', function() {
 							large: image.large_url
 
 						};
+
 					});
 
 					$scope.sorted_images = new Array();
@@ -90,6 +92,7 @@ pantherDirectives.directive('taxonomiesList', [
 					$scope.taxonomies = response.taxonomies;
 
 				});
+				
 			},
 			link: function(scope, el, attrs) {}
 		};
