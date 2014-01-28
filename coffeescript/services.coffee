@@ -14,19 +14,22 @@ pantherServices.service('Defaults', ->
 
 pantherServices.factory('Cart', ->
 	class Cart
-		this.addToCart = (item) ->
-			item_already_in_cart = null
+		this.addToCart = (item, quantity) ->
+			console.log('added')
 
-			angular.forEach(this.currentItems, (current_item) ->
+			item_already_in_cart = false
+
+			angular.forEach(this.currentItems, (current_item,index) ->
 				if item.id == current_item.id
-					item_already_in_cart = true
+					item_already_in_cart = index
 			)
 
-			if !item_already_in_cart
-				this.currentItems.push(item)
-				true
+			if item_already_in_cart	!= false
+				this.currentItems[item_already_in_cart].quantity = this.currentItems[item_already_in_cart].quantity + quantity
 			else
-				"Item Already In Cart"
+				item.quantity = quantity
+				this.currentItems.push(item)
+			
 
 		this.currentItems = []	
 )

@@ -10,10 +10,10 @@ pantherControllers.controller('productsController', ['$scope', '$state','$stateP
 		)
 	)
 
-	$scope.addToCart = (item) ->
-		# addToCart will return an error if item is not added successfully.
-		if Cart.addToCart(item) != true
-			$scope.errorMessage = Cart.addToCart(item) 
+	$scope.addToCart = (item,quantity) ->
+		if quantity > 0 then quantity else quantity = 1
+		Cart.addToCart(item,quantity)
+		console.log(Cart.currentItems)
 ])
 
 pantherControllers.controller('taxonomiesController', ['$scope', '$state','$stateParams', 'Taxonomy', 'Defaults', ($scope, $state, $stateParams, Taxonomy, Defaults) ->

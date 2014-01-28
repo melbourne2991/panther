@@ -4,4 +4,5 @@
 <div class="price">{{ product.price }}</div>
 <div class="description">{{ product.description }}</div>
 
-<button class="add-to-cart" ng-click="addToCart(product)">Add to Cart</button>
+<input type="number" ng-model="itemQuantity"></input>
+<button class="add-to-cart" ng-click="addToCart(product, itemQuantity)">Add to Cart</button>

@@ -14,10 +14,14 @@
           }
         });
       });
-      return $scope.addToCart = function(item) {
-        if (Cart.addToCart(item) !== true) {
-          return $scope.errorMessage = Cart.addToCart(item);
+      return $scope.addToCart = function(item, quantity) {
+        if (quantity > 0) {
+          quantity;
+        } else {
+          quantity = 1;
         }
+        Cart.addToCart(item, quantity);
+        return console.log(Cart.currentItems);
       };
     }
   ]);

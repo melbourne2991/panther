@@ -23,19 +23,20 @@
 
       function Cart() {}
 
-      Cart.addToCart = function(item) {
+      Cart.addToCart = function(item, quantity) {
         var item_already_in_cart;
-        item_already_in_cart = null;
-        angular.forEach(this.currentItems, function(current_item) {
+        console.log('added');
+        item_already_in_cart = false;
+        angular.forEach(this.currentItems, function(current_item, index) {
           if (item.id === current_item.id) {
-            return item_already_in_cart = true;
+            return item_already_in_cart = index;
           }
         });
-        if (!item_already_in_cart) {
-          this.currentItems.push(item);
-          return true;
+        if (item_already_in_cart !== false) {
+          return this.currentItems[item_already_in_cart].quantity = this.currentItems[item_already_in_cart].quantity + quantity;
         } else {
-          return "Item Already In Cart";
+          item.quantity = quantity;
+          return this.currentItems.push(item);
         }
       };
 
