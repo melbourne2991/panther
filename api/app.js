@@ -10,7 +10,7 @@ var path = require('path');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost:27017/panther_dev');
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -31,8 +31,16 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-require('../config/routes')(app);
+require('./config/routes')(app);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+mongoose.connect('mongodb://localhost:27017/panther_dev', function(err) {
+	if(err) {
+		console.log('Error connecting to database:' + err);
+	}
+	else {
+		http.createServer(app).listen(app.get('port'), function(){
+		  console.log('Express server listening on port ' + app.get('port'));
+		});			
+	}
 });
+

@@ -3,7 +3,7 @@
 // mongo <dbname> --eval "db.dropDatabase()"
 
 
-print('Inserting test data for products.')
+print('Inserting test data for products.');
 
 db.products.insert([
 	{
@@ -29,4 +29,4 @@ db.products.insert([
 	},
 ]);	
 
-print('Product Data Inserted.')
+print('Product Data Inserted.');

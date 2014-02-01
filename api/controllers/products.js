@@ -4,7 +4,14 @@ exports.create = function(req, res) {
 	new Product({
 		name: req.params.name, 
 		description: req.params.description 
-	}).save();
+	}).save(function(err) {
+		if (err) {
+			res.send('There was an error: ' + err);	
+		}
+		else {
+			res.send('Created new Product Object')
+		}
+	});
 
 	res.send('Submitted');
 };
@@ -31,3 +38,12 @@ exports.find = function(req, res) {
 	});
 }
 
+exports.update = function(req, res) {
+	console.log(req.body);
+
+	res.send('yo dawg');
+
+	// Product.findOne({_id: req.params.productId }, function(err, product) {
+
+	// }
+}
