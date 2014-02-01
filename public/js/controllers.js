@@ -7,29 +7,24 @@ pantherControllers.controller('productsController', [
 		
 		$scope.root = Defaults.root;
 
-		Product.find($stateParams.id).$promise.then(function(response) {
-
-			angular.forEach(response.variants, function(variant) {
-
-				if (variant.is_master) {
-
-					$scope.product = variant;
-
-				}
-			});
-
-		});
+		if($stateParams.productId != '') {
+			var product = Product.find({productId: $stateParams.productId}, function() {
+				$scope.product = product
+			});		
+		} 
+		else {
+			Product.all().$promise.then(function(response) {
+				angular.forEach(response, function(response) {
+					console.log(response)
+				});
+			});		
+		}
 
 		$scope.addToCart = function(item, quantity) {
-
 			if (quantity > 0) {
-
 				quantity;
-
 			} else {
-
 				quantity = 1;
-
 			}
 
 			Cart.addToCart(item, quantity);

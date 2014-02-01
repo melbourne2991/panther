@@ -26,7 +26,7 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 	})
 
 	.state('store.product_show', {
-		url: 'products/:id',
+		url: 'products/:productId',
 		views: {
 			'main': {
 				templateUrl: 'partials/product/product.html',

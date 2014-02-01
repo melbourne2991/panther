@@ -3,32 +3,22 @@
 	var pantherServices = angular.module('pantherServices', ['ngResource']);
 
 	pantherServices.service('Defaults', function() {
-
 		var root = 'http://0.0.0.0:3000/#';
-
 		var store_root = root + '';
 
 		return {
-
 			api_url: "http://0.0.0.0:3000/api/",
-
 			root: root,
-
 			store_root: store_root,
-
 			store_path: store_root + '/',
-
 			products_path: store_root + '/products/'
-
 		};
 	});
 
 	pantherServices.factory('Cart', function() {
-
 		var Cart;
 
 		return Cart = (function() {
-
 			function Cart() {}
 
 			Cart.addToCart = function(item, quantity) {
@@ -66,43 +56,18 @@
 	});
 
 	pantherServices.factory('Product', function($resource, Defaults) {
-
-		var Product;
-
-		return Product = (function() {
-
-			function Product() {
-
-				this.service = $resource(Defaults.api_url + 'products/:id', {
-					id: '@id'
-				});
-
-			}
-
-			Product.products_with_meta = function() {
-
-				var service;
-
-				service = $resource(Defaults.api_url + 'products');
-
-				return service.get();
-
-			};
-
-			Product.find = function(id) {
-
-				var service;
-
-				service = $resource(Defaults.api_url + 'products/:id', {
-					id: id
-				});
-
-				return service.get();
-			};
-
-			return Product;
-
-		})();
+		var Product = $resource(Defaults.api_url + 'products', {productId: '@productId'} , {
+				find: {
+					method: 'GET',
+					url: Defaults.api_url + 'products/:productId',
+				},
+				all: {
+					method: 'GET',
+					isArray: true
+				}
+			});
+		
+		return Product
 	});
 
 	pantherServices.factory('Taxonomy', function($resource, $http, Defaults) {
