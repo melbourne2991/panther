@@ -12,7 +12,9 @@ var pantherApp = angular.module('pantherApp',[
 
     'pantherServices',
     
-	'pantherDirectives'
+	'pantherDirectives',
+
+	'pantherAdminControllers'
 
 ]);
 
@@ -21,12 +23,30 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 	$stateProvider
 
 	.state('store', {
-		url: '/',
+		url: '',
 		templateUrl: 'partials/store.html'
 	})
 
+	.state('admin', {
+		url: '/admin',
+		templateUrl: 'partials/admin/admin.html'
+	})
+
+	.state('admin.products', {
+		url: '/products',
+		views : {
+			'main': {
+				templateUrl:  'partials/admin/products/products.html',
+				controller: 'productsAdminController',
+			},
+			'header': {
+				templateUrl:  'partials/admin/layout/header.html',
+			}			
+		}
+	})
+
 	.state('store.product_show', {
-		url: 'products/:productId',
+		url: '/products/:productId',
 		views: {
 			'main': {
 				templateUrl: 'partials/product/product.html',
@@ -42,7 +62,7 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 	})
 
 	.state('store.taxon_show', {
-		url: ':taxonomy/:taxon',
+		url: '/:taxonomy/:taxon',
 		views: {
 			'main': {
 				templateUrl:  'partials/taxon/taxon.html',
@@ -58,7 +78,7 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 	})
 
 	.state('store.taxonomy_show', {
-		url: ':taxonomy',
+		url: '/:taxonomy',
 		views : {
 			'main': {
 				templateUrl:  'partials/taxonomy/taxonomy.html',
@@ -72,6 +92,9 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 			}			
 		}
 	});
+
+
+
 
 }]);
 

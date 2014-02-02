@@ -1,0 +1,22 @@
+<div data-ng-repeat="product in products">
+	{{ product.name }}
+	{{ product.price }}
+	{{ product.description }}
+	</br>
+	<hr>
+</div>
+
+<div>
+	<form data-ng-submit="addNewProduct()">
+		Name: <input data-ng-model="newProduct.name"></br>
+		Description: <input data-ng-model="newProduct.description"></br>
+		Price: <input data-ng-model="newProduct.price"></br></br>
+
+		Product Preview</br>
+		{{newProduct.name}}</br>
+		{{newProduct.description}}</br>
+		{{newProduct.price}}</br>
+
+		<input type="submit">
+	</form>
+</div>

@@ -1,19 +1,14 @@
 var Product = require('../models/product.js');
 
 exports.create = function(req, res) {
-	new Product({
-		name: req.params.name, 
-		description: req.params.description 
-	}).save(function(err) {
+	new Product(req.body).save(function(err) {
 		if (err) {
-			res.send('There was an error: ' + err);	
+			res.send({response: 'An error was encountered.', err: err});	
 		}
 		else {
-			res.send('Created new Product Object')
+			res.send({response: 'Created new Product Object', err: null})
 		}
 	});
-
-	res.send('Submitted');
 };
 
 exports.all = function(req, res) {

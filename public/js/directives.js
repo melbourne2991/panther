@@ -78,8 +78,7 @@ pantherDirectives.directive('productImageGallery', function() {
 	};
 });
 
-pantherDirectives.directive('taxonomiesList', [
-	'Taxonomy', 'Defaults', function(Taxonomy, Defaults) {
+pantherDirectives.directive('taxonomiesList', ['Taxonomy', 'Defaults', function(Taxonomy, Defaults) {
 		return {
 			scope: {},
 			templateUrl: 'partials/directives/taxonomies_list.html',
@@ -99,8 +98,7 @@ pantherDirectives.directive('taxonomiesList', [
 	}
 ]);
 
-pantherDirectives.directive('shoppingCart', [
-	'Cart', function(Cart) {
+pantherDirectives.directive('shoppingCart', ['Cart', function(Cart) {
 		return {
 			scope: {},
 			templateUrl: 'partials/directives/shopping_cart.html',
@@ -112,5 +110,12 @@ pantherDirectives.directive('shoppingCart', [
 		};
 	}
 ]);
+
+
+pantherDirectives.directives('bootstrapNavBar', function() {
+	return {
+		scope: {}
+	}
+});
 
 }).call(this);
