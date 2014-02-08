@@ -1,6 +1,14 @@
+<div class="container full">
+	<div class="row header_container clearfix" ui-view="header">
+	</div>
 
-<div class="header_outer_container">
-	<div ui-view="header" class="container"></div>
+	<div class="row body">
+		<div class="col-lg-2 col-md-3 strip_padding sidebar_container">
+			<div data-ui-view="sidebar"></div>
+		</div>
+
+		<div class="col-lg-10 col-md-9 main_container col-lg-offset-2 col-md-offset-3">
+			<div data-ui-view="main" id="main"></div>
+		</div>
+	</div>
 </div>
-
-<div ui-view="main" class="container"></div>

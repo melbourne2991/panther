@@ -1,14 +1,14 @@
 module.exports = function(grunt) {
   // Configuration goes here
   grunt.initConfig({
-	   less: {
-	  	options: {
-	  		paths: ["public/bower_components/bootstrap/less"]		
-	  	},
-	  	files: {
-	  		"public/css/bootstrap.css" : "public/bower_components/bootstrap/less/bootstrap.less"
-	  	}  	
-	  } 
+
+   less: {
+      development: {
+        files: {
+            "public/css/app.css" : "public/less/app.less"
+        }   
+     } 
+    }
   });
 
   // Load plugins here

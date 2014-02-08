@@ -5,8 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Foundation</title>
 
+		<!--Fonts-->
+		<link href='http://fonts.googleapis.com/css?family=Carme' rel='stylesheet' type='text/css'>
+
 		<!--CSS-->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/app.css">
 
 		<!--Library/Framework JS-->
 		<script src="bower_components/jQuery/dist/jquery.js"></script>
@@ -22,11 +25,13 @@
 		<script src="js/directives.js"></script>
 
 		<script src="js/admin/controllers.js"></script>
+		<script src="js/admin/layout/services.js"></script>
+		<script src="js/admin/layout/directives.js"></script>
 	</head>
 
 	<body>
 		<div class="app_container" data-ng-app="pantherApp">
-			<div ui-view class="view-frame"></div>
+			<div ui-view class="view-frame" data-view-frame></div>
 		</div>
 	</body>
 </html>

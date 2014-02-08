@@ -1,4 +1,4 @@
-<div data-ng-repeat="product in products">
+<div data-ng-repeat="product in products" class="product">
 	{{ product.name }}
 	{{ product.price }}
 	{{ product.description }}
@@ -6,7 +6,7 @@
 	<hr>
 </div>
 
-<div>
+<div style="display:none">
 	<form data-ng-submit="addNewProduct()">
 		Name: <input data-ng-model="newProduct.name"></br>
 		Description: <input data-ng-model="newProduct.description"></br>

@@ -111,11 +111,52 @@ pantherDirectives.directive('shoppingCart', ['Cart', function(Cart) {
 	}
 ]);
 
+// pantherDirectives.directive('viewFrame', [function($scope, $rootScope, $timeout) {
+// 	return {
+// 		controller: function($scope, $element) {
+// 			var width = function() {
+// 				return $element.width();
+// 			} 
+		
+// 			var getBreakpoint = function() {
+// 				var windowWidth = window.innerWidth;
 
-pantherDirectives.directives('bootstrapNavBar', function() {
-	return {
-		scope: {}
-	}
-});
+// 				if(windowWidth < 768) {
+// 					return 'extra small';
+// 				} else if (windowWidth >= 768 && windowWidth < 992) {
+// 					return 'small';
+// 				} else if (windowWidth >= 992 && windowWidth < 1200) {
+// 					return 'medium';
+// 				} else if (windowWidth >= 1200) {
+// 					return 'large';
+// 				}					
+// 			}
+
+// 			currentBreakpoint = getBreakpoint();
+
+// 			angular.element(window).bind('resize', function() {
+// 				var newBreakpoint = getBreakpoint();
+// 				var previousBreakpoint = null;
+
+// 				if (newBreakpoint != currentBreakpoint) {
+// 					previousBreakpoint = currentBreakpoint;
+// 					currentBreakpoint = newBreakpoint;
+// 				}
+
+// 				$scope.$broadcast('windowResize', currentBreakpoint, previousBreakpoint);
+// 			});	
+// 		}
+// 	}
+// }]);
+
+// pantherDirectives.directive('sidebar', function($timeout) {
+// 	return {
+// 		controller: function($scope, $element) {
+// 			$scope.$on('windowResize', function(event, newBreakpoint, previousBreakpoint) {
+// 				console.log(newBreakpoint);
+// 			});
+// 		}
+// 	}
+// });
 
 }).call(this);

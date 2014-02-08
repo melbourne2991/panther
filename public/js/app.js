@@ -14,7 +14,9 @@ var pantherApp = angular.module('pantherApp',[
     
 	'pantherDirectives',
 
-	'pantherAdminControllers'
+	'pantherAdminControllers',
+
+	'adminLayoutDirectives'
 
 ]);
 
@@ -28,9 +30,26 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 	})
 
 	.state('admin', {
+		abstract: true,
 		url: '/admin',
-		templateUrl: 'partials/admin/admin.html'
+		templateUrl: 'partials/admin/admin.html',
 	})
+
+	.state('admin.home', {
+		url: '',
+		views : {
+			'main': {
+				templateUrl:  'partials/admin/products/products.html',
+				controller: 'productsAdminController',
+			},
+			'header': {
+				templateUrl:  'partials/admin/layout/header.html',
+			},	
+			'sidebar': {
+				templateUrl:  'partials/admin/layout/sidebar.html',
+			}			
+		}
+	})	
 
 	.state('admin.products', {
 		url: '/products',
@@ -41,6 +60,9 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 			},
 			'header': {
 				templateUrl:  'partials/admin/layout/header.html',
+			},	
+			'sidebar': {
+				templateUrl:  'partials/admin/layout/sidebar.html',
 			}			
 		}
 	})
