@@ -5895,8 +5895,6 @@ html {
   list-style: none;
   border-bottom: 1px solid #4a4a4a;
   cursor: pointer;
-  -webkit-transition: max-width 0.5s ease;
-  transition: max-width 0.5s ease;
 }
 #sidebar ul li a {
   color: #fff;
@@ -5906,14 +5904,21 @@ html {
 #sidebar ul li a:hover {
   text-decoration: none;
 }
-#sidebar ul li:hover > .pusher {
-  max-width: 100px;
+#sidebar ul li .pusher {
   height: 100%;
+  width: 0px;
   background: #383838;
   position: absolute;
   left: 0;
   top: 0;
   z-index: 1;
+  -webkit-transition: width 0.2s ease-in-out;
+  -moz-transition: width 0.2s ease-in-out;
+  -o-transition: width 0.2s ease-in-out;
+  transition: width 0.2s ease-in-out;
+}
+#sidebar ul li:hover > .pusher {
+  width: 100%;
 }
 #sidebar ul li:first-child {
   border-top: 1px solid #4a4a4a;

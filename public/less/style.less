@@ -98,8 +98,7 @@ body, html {
 			list-style: none;
 			border-bottom: 1px solid lighten(@dark_gray, 10%);
 			cursor: pointer;
-			-webkit-transition: max-width .5s ease;
-			transition: max-width .5s ease;
+
 
 			a {
 				color:#fff;
@@ -113,16 +112,21 @@ body, html {
 
 			.pusher {
 				height: 100%;
+				width: 0px;
 				background: lighten(@dark_gray, 3%);
 				position: absolute;
 				left:0;
 				top:0;
 				z-index:1;
+			    -webkit-transition: width 0.2s ease-in-out;
+			    -moz-transition: width 0.2s ease-in-out;
+			    -o-transition: width 0.2s ease-in-out;
+			    transition: width 0.2s ease-in-out;
 			}
 		}
 
 		li:hover > .pusher {
-			max-width: 100px;
+			width: 100%;
 		}
 
 		li:first-child {
