@@ -16,7 +16,9 @@ var pantherApp = angular.module('pantherApp',[
 
 	'pantherAdminControllers',
 
-	'adminLayoutDirectives'
+	'adminLayoutDirectives',
+
+	'adminLayoutAnimations'
 
 ]);
 
