@@ -1,5 +1,42 @@
 @dark_gray: hsl(0%, 0%, 19%);
 
+button {
+	border: 0;
+	padding: 15px;
+	font-weight: bolder;
+	color: #fff;
+	margin: 0;
+	float: left;
+	border-radius: 10px;
+}
+
+button.simple {
+	background: #51b1d2;
+	margin-right: 5px;
+	border-radius: 0 0 10px 10px;
+	// border-top: 2px solid darken(#F1EDEA, 20%)
+}
+
+button.advanced {
+	background: darken(#51b1d2, 40%);
+	float: left;
+	border-radius: 0 0 10px 10px;
+	// border-top: 2px solid darken(#277a96, 20%)
+}
+
+button.add {
+	background: rgb(39, 122, 150);
+}
+
+.product_controls {
+	.add {
+		float: right;
+		background: #73B143;
+		border-bottom: 2px solid darken(#73B143, 20%);
+		margin-top:40px;
+	}
+}
+
 .strip_padding {
 	padding-left: 0;
 	padding-right: 0;
@@ -64,6 +101,19 @@ body, html {
 @media (min-width: 992px) {
 	.main_container {
 		margin-top: 74px;
+		height: 100%;
+
+		.backdrop {
+			width: 100%;
+			position: absolute;
+			background: #000;
+			opacity: 0.5;
+			top:0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 5;
+		}
 	}
 
 	.header_container {
@@ -140,6 +190,9 @@ body, html {
 	padding: 20px;
 	.title_font;
 	color: @dark_gray;
+	-webkit-box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.2);
+	-moz-box-shadow:    1px 1px 2px 0px rgba(50, 50, 50, 0.2);
+	box-shadow:         1px 1px 2px 0px rgba(50, 50, 50, 0.2);
 }
 
 .logo {
@@ -152,5 +205,19 @@ body, html {
 .product {
 	background: #fff;
 	padding: 20px;
-	margin-top: 20px;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+
+.product_editor {
+	z-index:10;
+	background: #fff;
+	border-radius: 10px;
+	padding: 40px;
+	width: 500px;
+	position: absolute;
+}
+
+#main {
+	padding: 0 15px 0 15px;
 }

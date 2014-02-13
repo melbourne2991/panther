@@ -1,10 +1,23 @@
+<div class="row">
+	<div class="col-md-12 product_controls">
+		<button class="simple">Simple Editor</button>
+		<button class="advanced">Advanced Editor</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12 product_controls">
+		<button class="add" ng-click="openProductEditor('new')">Add Product</button>
+	</div>
+</div>
+
 <div data-ng-repeat="product in products" class="product">
 	{{ product.name }}
 	{{ product.price }}
 	{{ product.description }}
-	</br>
-	<hr>
 </div>
+
+<div product-editor="selectedProduct" ng-show="selectedProduct" class="product_editor">allo love</div>
 
 <div style="display:none">
 	<form data-ng-submit="addNewProduct()">

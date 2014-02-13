@@ -2,7 +2,18 @@
 
 var pantherAdminControllers = angular.module('pantherAdminControllers', ['pantherServices', 'ui.router']);
 
-pantherAdminControllers.controller('productsAdminController', ['$scope', '$stateParams', 'Product', function($scope, $stateParams, Product) {
+pantherAdminControllers.controller('adminController', ['$scope', '$state', 'Defaults', function($scope, $state,  Defaults) {
+	$scope.go = function(state) {
+		$state.go('^.' + state);
+	}
+
+	$scope.backdropSwitch = null;
+	$scope.$on('backdrop', function(event, backdropSwitch) {
+		$scope.backdropSwitch = backdropSwitch;
+	});
+}]);
+
+pantherAdminControllers.controller('productsAdminController', ['$scope', '$stateParams', 'Product', 'Defaults', function($scope, $stateParams, Product) {
 
 	var queryProducts = function() {
 		Product.all().$promise.then(function(response) {
@@ -31,6 +42,13 @@ pantherAdminControllers.controller('productsAdminController', ['$scope', '$state
 		});
 	};
 
+	$scope.selectedProduct = null;
+	$scope.openProductEditor = function(product) {
+		$scope.$emit('backdrop', true);
+		$scope.selectedProduct = product;
+	}
+
 }])
 
 }).call(this);
+

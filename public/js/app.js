@@ -3,23 +3,15 @@
 (function() {
 
 var pantherApp = angular.module('pantherApp',[
-
 	'ui.router',
-
 	'ngResource',
-
 	'pantherControllers',
-
-    'pantherServices',
-    
+    'pantherServices',  
 	'pantherDirectives',
-
 	'pantherAdminControllers',
-
+	'pantherAdminDirectives',
 	'adminLayoutDirectives',
-
 	'adminLayoutAnimations'
-
 ]);
 
 pantherApp.config(['$stateProvider', function($stateProvider) {
@@ -35,6 +27,7 @@ pantherApp.config(['$stateProvider', function($stateProvider) {
 		abstract: true,
 		url: '/admin',
 		templateUrl: 'partials/admin/admin.html',
+		controller: 'adminController'
 	})
 
 	.state('admin.home', {

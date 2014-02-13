@@ -5,12 +5,18 @@
 	pantherServices.service('Defaults', function() {
 		var root = 'http://0.0.0.0:3000/#';
 		var store_root = root + '';
+		var admin_root = root + '/admin'
 
 		return {
 			api_url: "http://0.0.0.0:3000/api/",
 			root: root,
+
 			store_root: store_root,
 			store_path: store_root + '/',
+
+			admin_root: admin_root,
+			admin_path: admin_root + '/',
+
 			products_path: store_root + '/products/'
 		};
 	});
