@@ -5818,6 +5818,9 @@ td.visible-print {
     display: none !important;
   }
 }
+h2:first-child {
+  margin-top: 0;
+}
 button {
   border: 0;
   padding: 15px;
@@ -5891,7 +5894,7 @@ html {
 }
 @media (min-width: 992px) {
   .main_container {
-    margin-top: 74px;
+    padding-top: 74px;
     height: 100%;
   }
   .main_container .backdrop {
@@ -5908,7 +5911,7 @@ html {
   .header_container {
     position: fixed;
     width: 100%;
-    z-index: 5;
+    z-index: 15;
   }
   .sidebar_container {
     position: fixed;
@@ -5988,9 +5991,14 @@ html {
   z-index: 10;
   background: #fff;
   border-radius: 10px;
-  padding: 40px;
-  width: 500px;
+  padding: 20px;
+  width: 80%;
+  height: 80%;
   position: absolute;
+  left: 50%;
+  top: 74px;
+  margin-left: -40%;
+  margin-top: 4%;
 }
 #main {
   padding: 0 15px 0 15px;

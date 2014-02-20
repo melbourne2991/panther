@@ -14,10 +14,13 @@
 <div data-ng-repeat="product in products" class="product">
 	{{ product.name }}
 	{{ product.price }}
+	{{ product.display_price }}
 	{{ product.description }}
+	{{ product.date_available }}
 </div>
 
-<div product-editor="selectedProduct" ng-show="selectedProduct" class="product_editor">allo love</div>
+<div product-editor product="selectedProduct" ng-show="selectedProduct"  product-is-new="{{ productIsNew }}" class="product_editor" query="queryProducts" close="closeProductEditor">
+</div>
 
 <div style="display:none">
 	<form data-ng-submit="addNewProduct()">

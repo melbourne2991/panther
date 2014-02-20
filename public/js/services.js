@@ -72,6 +72,16 @@
 					isArray: true
 				}
 			});
+
+		Product.schema = function() {
+			return {
+				name: null,
+				description: null,
+				price: null,
+				display_price: null,
+				date_available: null
+			};
+		} 
 		
 		return Product
 	});

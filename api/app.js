@@ -7,6 +7,9 @@ var express = require('express');
 var mongoose = require('mongoose');
 var http = require('http');
 var path = require('path');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 var app = express();
 
 

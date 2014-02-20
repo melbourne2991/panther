@@ -7,8 +7,11 @@
   },
   "dependencies": {
     "express": "3.4.8",
-    "socket.io" : "~0.9",
-    "jade": "*"
+    "socket.io": "~0.9",
+    "jade": "*",
+    "passport": "~0.2.0",
+    "passport-local": "~0.1.6",
+    "passport-local-mongoose": "~0.2.6"
   },
   "devDependencies": {
     "karma-script-launcher": "~0.1.0",
